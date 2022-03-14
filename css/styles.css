@@ -1,0 +1,255 @@
+body {    
+    display: flex;/*Πως θα τοποθετηθούν τα στοιχεία μέσα στο body*/
+    flex-direction: column;/*Τα στοιχεία θα τοποθετηθούν κάθετα*/
+    flex-wrap: wrap;/*Μας βοηθάει το header και το footer να έχουν τουλάχιστον το ιδιο πλάτος με το main ή και μεγαλύτερο ανάλογα την οθόνη*/
+}
+
+header {
+    padding: 20px;/*Δημιουργία κενού εσωτερικά στο header γύρω από τα στοιχεία*/  
+    display: flex;/*Πως θα τοποθετηθούν τα στοιχεία μέσα στο header*/
+    flex-direction: row;/*Τα στοιχεία θα τοποθετηθούν οριζόντια*/
+    align-items: center;/*Κεντράρισμα των εσωτερικών στοιχείων κάθετα*/
+    background-color: #f2cc8f;
+    border-radius: 5px;/*δημιουργία καμπύλης στις γωνίες*/
+}
+
+#logo {
+    max-height: 150px;/*δίνεται σαν max για να οριστεί αυτόματα με βάση το πλάτος χωρίς να χαλάσουν οι αναλογίες*/
+    width: 150px;/*ορισμός πλάτους*/
+    margin:20px;/*δημιουργία κενού εξωτερικά μεταξύ άλλων στοιχείων*/
+    border-radius: 30px;/*δημιουργία καμπύλης στις γωνίες*/
+}
+
+#title {
+    margin:0 auto; /*δημιουργία κενού, αριστερό ίδιο με το δεξιό, πάνω κάτω 0*/
+    align-items: center; /*Κεντράρισμα των εσωτερικών στοιχείων κάθετα*/   
+}
+
+#title * {/*επιλογέας όλων των στοιχείων του div*/
+    text-align: center;/*τοποθέτηση κειμένων στο κέντρο*/
+}
+
+#signin_signup {  
+    min-height: 50px;/*δίνεται με min για να μπορεί να μεγαλώνει το ύψος σε μικρές οθόνες και το κείμενο να είναι σε 2 γραμμές*/
+    max-width: 150px;/*δίνεται σε max για να μπορεί να μικραίνει αυτόματα ανάλογα την οθόνη*/
+    margin:20px;/*δημιουργία κενού εξωτερικά μεταξύ άλλων στοιχείων*/
+    
+}
+
+.side { /*επιλογέας των 2 στοιχείων στην μέση της σελίδας με id*/
+    display: flex;/*τοποθέτηση flex*/
+    align-items: stretch;/*τα στοιχεία θα πάρουν όλο το ύψος*/
+    flex-direction: row;/*κατεύθυνση flex οριζόντια*/
+}
+
+main.side {/*χαρακτηριστικά που θέλουμε όταν το main είναι side*/
+    width: 100%;
+    padding: 20px;    
+    justify-content: center;
+}
+
+main.singcol {
+    width: 100%;
+    /* justify-content: stretch; */
+    /* justify-self: center; */
+    /* justify-items: center; */
+    /* align-content: center; */
+    /* justify-content: center; */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.col_table{
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
+
+}
+
+td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+  
+
+.side section {
+    padding: 5px;
+}
+
+.col {
+    display: flex;/*τοποθέτηση flex*/
+    align-items: stretch;/*τα στοιχεία θα πάρουν όλο το ύψος*/
+    flex-direction: column;/*κατεύθυνση flex κάθετα*/
+    justify-content: center;
+    width: 100%;
+}
+
+nav {  
+    background-color: #3d405b;    
+    border-radius: 5%;/*δημιουργία καμπύλης στις γωνίες*/
+    width: min-content;
+}
+
+main {
+    padding: 20px;/*Δημιουργία κενού εσωτερικά στο κυρίως περιεχόμενο γύρω από τα στοιχεία*/
+}
+
+#nav_li > a {
+    padding: 15px;/*Δημιουργία κενού εσωτερικά στο κουμπί του μενού γύρω από τα στοιχεία*/
+    font-weight: bold;
+    text-decoration: none;/*να μην είναι υπογραμμισμένο και μπλε*/
+    width: 100%;/*δίνει όλα το διαθέσιμο πλάτος*/
+    text-align: center;/*τοποθέτηση κειμένων στο κέντρο*/
+    margin: 2px;/*δημιουργία κενού εξωτερικά μεταξύ άλλων στοιχείων*/
+    color: black;
+    border-radius: 5px;/*δημιουργία καμπύλης στις γωνίες*/
+    background-color: #f2cc8f;
+}
+
+#nav_li > a.current{/*κλάση που έχει δοθεί στο κουμπί του μενού που αντιστοιχεί στην τρέχουσα σελίδα*/
+    background-color: #f4f1de;
+    pointer-events: none;/*απενεργοποιεί τις δυνατότητες που έχουν τα κουμπιά*/
+}
+
+#nav_li > a:hover {/*όταν περάσει το ποντίκι πάνω από το στοιχείο*/
+    background-color: #ca9a4c;
+}
+
+#nav_li {
+    padding: 20px;/*Δημιουργία κενού εσωτερικά στο μενού γύρω από τα στοιχεία*/
+    padding-top: 50px;/*Δημιουργία κενού πάνω εσωτερικά στο μενού*/
+    display: flex;/*τοποθέτηση flex*/
+    flex-direction: column;/*κατεύθυνση flex οριζόντια*/
+    align-items: center;/*Κεντράρισμα των εσωτερικών στοιχείων κάθετα*/
+    padding-bottom: 50px;/*Δημιουργία κενού κάτω εσωτερικά στο μενού*/
+}
+
+footer {
+    display: flex;/*τοποθέτηση flex*/
+    flex-direction: row;/*Τα στοιχεία θα τοποθετηθούν οριζόντια*/
+    justify-content: center;/*τοποθέτηση στοιχείων στο κέντρο*/
+    padding: 50px;/*Δημιουργία κενού εσωτερικά στο footer γύρω από τα στοιχεία*/
+    background-color: #81b29a;
+    border-radius: 5px;/*δημιουργία καμπύλης στις γωνίες*/
+}
+footer a{
+    margin: 2px;/*δημιουργία κενού εξωτερικά μεταξύ άλλων στοιχείων*/
+}
+
+.clarification {/*κλάση για διευκρινήσεις*/
+    padding: 15px;/*δημιουργία εσωτερικού κενού*/
+    background-color: #f2cc8f;
+    color: #3d405b;
+    width: fit-content;/*το πλάτος να είναι όσο και το περιεχόμενο*/
+    border-radius: 5px;/*στρογγυλές άκρες*/
+    box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
+}
+
+.warning {/*κλάση για σφάλματα*/
+    padding: 15px;/*δημιουργία εσωτερικού κενού*/
+    background-color: #f94144;
+    color: #f4f1de;
+    width: fit-content;/*το πλάτος να είναι όσο και το περιεχόμενο*/
+    border-radius: 5px;/*στρογγυλές άκρες*/
+    box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
+    align-self: center;
+}
+
+.success {/*κλάση για σφάλματα*/
+    padding: 15px;/*δημιουργία εσωτερικού κενού*/
+    background-color: #2a9d8f;
+    color: #f4f1de;
+    width: fit-content;/*το πλάτος να είναι όσο και το περιεχόμενο*/
+    border-radius: 5px;/*στρογγυλές άκρες*/
+    box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
+    align-self: center;
+}
+
+section.col *{ /*Σε όλα τα section που έχουν κλάση col βγάζουμε τα padding και margin*/
+    margin: unset;
+    padding: unset;    
+}
+
+.block {/*Θέτουμε στην κλάση block padding και margin*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+form {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #3d405b;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 0 30 30 30;
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.error {
+    display: flex;
+    justify-self: flex-end;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: red;
+}
+
+#role {
+    min-width: 177px;
+}
+
+input[type=submit],
+input.submit {
+    margin-top: 5px;
+}
+
+label {
+    display: flex;
+    padding: 0px 1em 0px 8px;
+    justify-content: center;
+  }
+  
+  input[type=radio],
+  input.radio {
+    margin: 2px 0 0 2px;
+  }
+
+.hiddenForms {    
+    align-self: center;
+    margin: 50px;
+    border-style: none;
+}
+
+.hiddenForms > input.button{
+    padding: 10px;
+    background-color: #f2cc8f;
+    border-color: #3d405b;
+    border-radius: 5px;
+}
+
+.hiddenForms > input.button:hover{
+    background-color: #ca9a4c;
+}
+
+.hiddenForms > input.button:active{
+    background-color: #f4f1de;
+}
