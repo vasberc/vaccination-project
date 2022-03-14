@@ -41,7 +41,7 @@
             <!--Tag με το βασικό περιεχόμενο τησ σελίδας --> 
             <main class="col">
             <?php  if($hasError or $hasSucceed) { ?>
-                    <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
+                    <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
             <?php  } ?>
                 <table class="col_table">
                     <tr>
@@ -54,7 +54,7 @@
                         <th>Επώνυμο:</th>
                         <td><?php echo $_SESSION['user']->surname; ?></td>
                         <th>Φύλο:</th>
-                        <td><?php echo $_SESSION['user']->sex; ?></td>
+                        <td><?php if($_SESSION['user']->sex == 'male') echo 'Άνδρας'; else echo 'Γυναίκα'; ?></td>
                     </tr>
                     <tr>
                         <th>ΑΜΚΑ:</th>
@@ -73,12 +73,12 @@
                         <td colspan="3"><?php echo $_SESSION['user']->email; ?></td>
                     </tr>
                 </table>
-                    <form class="hiddenForms" name="appointment" action="" method="post">                            
+                    <form class="hidden_forms" name="appointment" action="" method="post">                            
                         <input type="hidden" id="action" name="action" value=<?php if(isset($_SESSION['user']->appointment)) echo '"delete"'; else echo '"create"'; ?>>
                         <input class="button" type="submit" value=<?php if(isset($_SESSION['user']->appointment)) echo '"Ακυρώστε το ραντεβού σας"'; else echo '"Κλείστε το ραντεβού σας"'; ?>>
                     </form>
 
-                    <form class="hiddenForms" name="appointment" action="" method="post">                            
+                    <form class="hidden_forms" name="appointment" action="" method="post">                            
                         <input type="hidden" id="action" name="action" value="logout">
                         <input class="button" type="submit" value="Αποσύνδεση χρήστη">
                     </form>

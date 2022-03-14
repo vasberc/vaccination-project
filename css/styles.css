@@ -159,6 +159,7 @@ footer a{
     border-radius: 5px;/*στρογγυλές άκρες*/
     box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
     align-self: center;
+    position: relative;
 }
 
 .success {/*κλάση για σφάλματα*/
@@ -233,23 +234,43 @@ label {
     margin: 2px 0 0 2px;
   }
 
-.hiddenForms {    
+.hidden_forms {    
     align-self: center;
     margin: 50px;
     border-style: none;
 }
 
-.hiddenForms > input.button{
+.hidden_forms > input.button{
     padding: 10px;
     background-color: #f2cc8f;
     border-color: #3d405b;
     border-radius: 5px;
 }
 
-.hiddenForms > input.button:hover{
+.hidden_forms > input.button:hover{
     background-color: #ca9a4c;
 }
 
-.hiddenForms > input.button:active{
+.hidden_forms > input.button:active{
     background-color: #f4f1de;
+}
+
+#close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2px 5px;
+    background: #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #000000;
+    margin: 1px;
+}
+
+#close:hover {
+    float:right;
+    display:inline-block;
+    padding:2px 5px;
+    background:#ccc;
+    color:rgb(107, 107, 107);
 }

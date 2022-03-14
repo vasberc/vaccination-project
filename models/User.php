@@ -53,11 +53,6 @@
 
         //Getters
         function __get($attr) {
-
-            if($attr == 'sex') {
-                return $this->$attr == 'male' ? 'Άνδρας' : 'Γυναίκα';
-            }
-
             return $this->$attr;
         }
         //Setters

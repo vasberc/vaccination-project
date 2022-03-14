@@ -41,7 +41,7 @@
             <!--Tag με το βασικό περιεχόμενο της σελίδας --> 
             <main class="singcol">               
             <?php  if($hasError) { ?>
-                    <p class="warning"><?php echo $_ERROR_MESSAGES[$_GET['message']]; ?></p>
+                    <p class="warning"><a class='child' id='close' href="?">x</a><?php echo $_ERROR_MESSAGES[$_GET['message']]; ?></p>
             <?php  } ?>
                     
                 
