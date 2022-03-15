@@ -15,7 +15,8 @@
                 header("Location: ./create-appointment.php");
             }
         } else if ($_POST['action'] == 'delete') {
-            if($dbManager.deleteAppointment($_SESSION['user']->appointment)) {
+            if($dbManager->deleteAppointment($_SESSION['user']->appointment->id)) {
+                deleteAppointmentFromSession();
                 $message = 'appointmentDeletedSuccessfully';
                 header("Location: ./userpage.php?message=$message&error=0");
             } else {

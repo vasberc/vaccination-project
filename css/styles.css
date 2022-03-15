@@ -170,6 +170,7 @@ footer a{
     border-radius: 5px;/*στρογγυλές άκρες*/
     box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
     align-self: center;
+    position: relative;
 }
 
 section.col *{ /*Σε όλα τα section που έχουν κλάση col βγάζουμε τα padding και margin*/
@@ -236,7 +237,7 @@ label {
 
 .hidden_forms {    
     align-self: center;
-    margin: 50px;
+    margin: 10px;
     border-style: none;
 }
 
@@ -259,7 +260,7 @@ label {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 2px 5px;
+    padding: 0.5px 3px 1px 3px;
     background: #ccc;
     border-radius: 5px;
     text-decoration: none;
@@ -270,7 +271,12 @@ label {
 #close:hover {
     float:right;
     display:inline-block;
-    padding:2px 5px;
+    padding:0.5px 3px 1px 3px;
     background:#ccc;
     color:rgb(107, 107, 107);
+}
+
+.col_item {
+    justify-self: center;
+    align-self: center;
 }

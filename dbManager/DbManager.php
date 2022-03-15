@@ -104,13 +104,21 @@
             mysqli_close($con);
             if($result) {
 			    if($result && mysqli_num_rows($result) > 0) {
-                    $user->appointment = mysqli_fetch_assoc($result);
+                    $appointmentData = mysqli_fetch_assoc($result);
+                    $appointment = new Appointment (
+                        $this->getVaccinationCenterByIdFromDb($appointmentData['vaccination_center_id']),
+                        $appointmentData['user_id'],
+                        $appointmentData['date'],
+                        $appointmentData['time'],
+                        $appointmentData['completed'],
+                        $appointmentData['appointment_id']
+                    );
                     mysqli_free_result($result);
-                    return $user;
+                    return $appointment;
                 }
             }
-            $user->appointment = null;
-            return $user;
+            $appointment = null;
+            return $appointment;
         }
 
         //Function που βρίσκει από την βάση τον γιατρό με το δοθέν χρήστη
@@ -140,7 +148,7 @@
         //Function που βρίσκει από την βάση το κέντρο εμβολιασμού με το δοθέν id
         public function getVaccinationCenterByIdFromDb($vaccinationCenterId) {
             $con = $this->connect();
-            $query = "select * from vaccination-centers where vaccination_center_id = '".$vaccinationCenterId."' limit 1";
+            $query = "select * from `vaccination-centers` where vaccination_center_id = '".$vaccinationCenterId."' limit 1";
             $result = mysqli_query($con, $query);
             mysqli_close($con);
             if($result) {
@@ -183,5 +191,18 @@
                 }
             }
             return null;
+        }
+
+        public function deleteAppointment($appointmentId) {
+            $con = $this->connect();
+            $query = "delete from appointments where appointment_id = '".$appointmentId."' ";
+            $result = mysqli_query($con, $query);
+            mysqli_close($con);
+            $succeed = false;
+            if($result) {			    
+                $succeed = true; 
+            }
+            mysqli_free_result($result);
+            return $succeed;
         }
     } 

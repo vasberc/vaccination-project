@@ -43,6 +43,7 @@
             <?php  if($hasError or $hasSucceed) { ?>
                     <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
             <?php  } ?>
+            <h3 class="col_item">Προσωπικά στοιχεία</h3>
                 <table class="col_table">
                     <tr>
                         <th>Όνομα:</th>
@@ -73,9 +74,26 @@
                         <td colspan="3"><?php echo $_SESSION['user']->email; ?></td>
                     </tr>
                 </table>
+                <?php if($_SESSION['user']->appointment != null) { ?>
+                    <h3 class="col_item">Στοιχεία Ραντεβού</h3>
+                    <table class="col_table">
+                    <tr>
+                        <th>Εμβολιαστικό Κέντρο:</th>
+                        <td><?php echo $_SESSION['user']->appointment->vaccinationCenter->name; ?></td>                                         
+                    </tr>
+                    <tr>
+                        <th>Ημερομηνία:</th>
+                        <td><?php echo date("d-m-Y", strtotime($_SESSION['user']->appointment->date)); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Ώρα:</th>
+                        <td><?php echo date("H:i", strtotime($_SESSION['user']->appointment->time)); ?></td>
+                    </tr>                    
+                </table>
+                <?php } ?>
                     <form class="hidden_forms" name="appointment" action="" method="post">                            
-                        <input type="hidden" id="action" name="action" value=<?php if(isset($_SESSION['user']->appointment)) echo '"delete"'; else echo '"create"'; ?>>
-                        <input class="button" type="submit" value=<?php if(isset($_SESSION['user']->appointment)) echo '"Ακυρώστε το ραντεβού σας"'; else echo '"Κλείστε το ραντεβού σας"'; ?>>
+                        <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->appointment != null) echo '"delete"'; else echo '"create"'; ?>>
+                        <input class="button" type="submit" value=<?php if($_SESSION['user']->appointment != null) echo '"Ακυρώστε το ραντεβού σας"'; else echo '"Κλείστε το ραντεβού σας"'; ?>>
                     </form>
 
                     <form class="hidden_forms" name="appointment" action="" method="post">                            

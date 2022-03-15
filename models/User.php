@@ -55,6 +55,12 @@
         function __get($attr) {
             return $this->$attr;
         }
+        // function  getAppointment(): Appointment {
+        //     return $this->appointment;
+        // }
+        // function setAppointment(Appointment $appointment) {
+        //     $this->appointment = $appointment;
+        // }
         //Setters
         function __set($atrr, $value) {
             switch ($atrr) {
