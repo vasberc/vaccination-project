@@ -277,6 +277,35 @@ label {
 }
 
 .col_item {
+    margin: 10px;
     justify-self: center;
     align-self: center;
+}
+
+td {
+
+}
+
+.slot {    
+    display: block;
+    width: auto;
+    text-decoration: none;
+    height: auto;
+    padding: 8px;
+    color: black;
+    text-align: center;
+}
+
+.link_slot:hover {
+    background-color: #3d405b;
+    color: #ccc;
+}
+
+.link_slot:active {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.timeslot {
+    padding: 0;
 }

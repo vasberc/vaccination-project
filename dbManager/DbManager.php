@@ -145,6 +145,30 @@
             return null;
         }
 
+        //Function που βρίσκει από την βάση όλα τα κέντρα εμβολιασμού
+        public function getVaccinationCenters() {
+            $con = $this->connect();
+            $query = "select * from `vaccination-centers`";
+            $result = mysqli_query($con, $query);
+            mysqli_close($con);
+            if($result && mysqli_num_rows($result) > 0) {
+                $i=0;
+                foreach($result as $item){ 
+                    $vaccinationCenters[$i] = new VaccinationCenter (
+                        $item['vaccination_center_id'],
+                        $item['name'],
+                        $item['address'],
+                        $item['post_code'],
+                        $item['telephone_number']
+                    );
+                    $i = $i + 1	;
+                }
+                return $vaccinationCenters;
+            } else {
+                return false;
+            }
+        }
+
         //Function που βρίσκει από την βάση το κέντρο εμβολιασμού με το δοθέν id
         public function getVaccinationCenterByIdFromDb($vaccinationCenterId) {
             $con = $this->connect();
@@ -182,7 +206,7 @@
 			    if($result && mysqli_num_rows($result) > 0) {
                     $i = 0;
                     foreach($result as $item){ 
-                        $getVaccinationCenterDoctorsId[i] = $q['doctor_id'];
+                        $getVaccinationCenterDoctorsId[$i] = $item['doctor_id'];
                         $i = $i + 1	;
                     }
                     mysqli_free_result($result);
@@ -191,6 +215,29 @@
                 }
             }
             return null;
+        }
+
+        public function getAppointmentsOfSelectedVaccinationCenter($selectedVaccinationCenterId) {
+            $con = $this->connect();
+            $query = "select * from appointments where vaccination_center_id = '".$selectedVaccinationCenterId."' ";
+            $result = mysqli_query($con, $query);
+            mysqli_close($con);
+            if($result && mysqli_num_rows($result) > 0) {
+                $i=0;
+                foreach($result as $item){ 
+                    $appointmentsOfSelectedVaccinationCenter[$i] = new Appointment (
+                        $item['vaccination_center_id'],
+                        $item['user_id'],
+                        $item['date'],
+                        $item['time'],
+                        $item['completed'] == "1"
+                    );
+                    $i = $i + 1	;
+                }
+                return $appointmentsOfSelectedVaccinationCenter;
+            } else {
+                return false;
+            }
         }
 
         public function deleteAppointment($appointmentId) {

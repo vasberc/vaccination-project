@@ -76,7 +76,7 @@
                 </table>
                 <?php if($_SESSION['user']->appointment != null) { ?>
                     <h3 class="col_item">Στοιχεία Ραντεβού</h3>
-                    <table class="col_table">
+                <table class="col_table">
                     <tr>
                         <th>Εμβολιαστικό Κέντρο:</th>
                         <td><?php echo $_SESSION['user']->appointment->vaccinationCenter->name; ?></td>                                         
