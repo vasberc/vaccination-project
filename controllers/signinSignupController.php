@@ -42,6 +42,7 @@
         //Σε περίπτωση σφάλματος φωρτώνει πάλι η σελίδα με τις μεταβλητές λάθους σαν query στο λινκ
         $message = $ex->getMessage();                
         header("Location: ./signin-signup.php?message=$message&error=1");
+        exit();
         }
         //Έλεγχος ότι ο χρήστης δημιουργήθηκε
         if(isset($user)) {            

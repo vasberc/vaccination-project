@@ -252,4 +252,27 @@
             mysqli_free_result($result);
             return $succeed;
         }
+
+        //Function που εισάγει εγγραφή χρήστη στην βάση
+        public function saveNewAppointment($vaccinationCenterId, $timeslot, $user) {
+            $con = $this->connect();
+            $query = "INSERT INTO appointments(vaccination_center_id, user_id, date, time)
+                    VALUES (
+                        '$vaccinationCenterId', 
+                        '$user->id', 
+                        '".$timeslot['date']."', 
+                        '".$timeslot['time']."'                   
+                    )";
+            if(!mysqli_query($con, $query)) {
+                if((stripos(mysqli_error($con), "Duplicate entry") !== false)) {
+                    $message = 'appointmentErrorDuplicateEntry';  
+                    mysqli_close($con);
+                    throw new Exception($message);                  
+                } else {
+                    mysqli_close($con);
+                    return false;
+                }                
+            } else return true;
+            mysqli_close($con);            
+        }
     } 

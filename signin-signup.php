@@ -4,6 +4,7 @@
     include("./utils/strings.php");
     if($isLoggedIn) {
         header("Location: ./userpage.php");
+        exit();
     }
 ?>
 

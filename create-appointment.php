@@ -6,10 +6,13 @@
     //Σε περίπτωση που κάποιος χρήστης πατήσει το λινκ της σελίδας ενώ για κάποια από τις παρακάτω περιπτώσεις θα γίνεται redirect
     if(!$isLoggedIn) {
         header("Location: ./signin-signup.php");
+        exit();
     } else if($_SESSION['user']->age < 40 or $_SESSION['user']->age > 65) {
         header("Location: ./userpage.php");
+        exit();
     } else if($_SESSION['user']->appointment != null) {
         header("Location: ./userpage.php");
+        exit();
     }
 ?>
 
@@ -46,6 +49,9 @@
             </nav>
             <!--Tag με το βασικό περιεχόμενο τησ σελίδας --> 
             <main class="col">
+            <?php  if($hasError) { ?>
+                    <p class="warning"><a class='child' id='close' href="?">x</a><?php echo $_ERROR_MESSAGES[$_GET['message']]; ?></p>
+            <?php  } ?>
             <?php if($vaccinationCenters) { ?>
                 <h3 class="col_item"><?php if($selectedVaccinationCenter) echo $selectedVaccinationCenter->name; else echo "Διαθέσιμα εμβολιαστικά κέντρα"; ?></h3>
                 <select class="col_item" name="forma" onchange="location = this.value;">
@@ -79,18 +85,18 @@
                     </tr>
                     <tr>
                         <th>08:00</th>
-                        <td class="timeslot"><?php if($slotOneAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $item->id; ?>&timeslot=1">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
-                        <td class="timeslot"><?php if($slotFourAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $item->id; ?>&timeslot=4">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
+                        <td class="timeslot"><?php if($slotOneAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $selectedVaccinationCenter->id; ?>&timeslot=1">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
+                        <td class="timeslot"><?php if($slotFourAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $selectedVaccinationCenter->id; ?>&timeslot=4">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
                     </tr>
                     <tr>
                         <th>09:00</th>
-                        <td class="timeslot"><?php if($slotTwoAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $item->id; ?>&timeslot=2">Επιλογή</a><?php } else echo '<a class="slot ">Μη διαθέσιμο</a>'; ?></td>
-                        <td class="timeslot"><?php if($slotFiveAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $item->id; ?>&timeslot=5">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
+                        <td class="timeslot"><?php if($slotTwoAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $selectedVaccinationCenter->id; ?>&timeslot=2">Επιλογή</a><?php } else echo '<a class="slot ">Μη διαθέσιμο</a>'; ?></td>
+                        <td class="timeslot"><?php if($slotFiveAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $selectedVaccinationCenter->id; ?>&timeslot=5">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
                     </tr>    
                     <tr>
                         <th>10:00</th>
-                        <td class="timeslot"><?php if($slotThreeAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $item->id; ?>&timeslot=3">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
-                        <td class="timeslot"><?php if($slotSixAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $item->id; ?>&timeslot=6">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
+                        <td class="timeslot"><?php if($slotThreeAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $selectedVaccinationCenter->id; ?>&timeslot=3">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
+                        <td class="timeslot"><?php if($slotSixAvailable != false) { ?><a class="slot link_slot" href="?vaccination_center_id=<?php echo $selectedVaccinationCenter->id; ?>&timeslot=6">Επιλογή</a><?php } else echo '<a class="slot">Μη διαθέσιμο</a>'; ?></td>
                     </tr>                    
                 </table>
                     <?php } ?>

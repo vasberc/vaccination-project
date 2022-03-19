@@ -11,22 +11,27 @@
             if($_SESSION['user']->age < 40 or $_SESSION['user']->age > 65) {
                 $message = 'notCurrentVaccinationAgeGroup';
                 header("Location: ./userpage.php?message=$message&error=1");
+                exit();
             } else {
                 header("Location: ./create-appointment.php");
+                exit();
             }
         } else if ($_POST['action'] == 'delete') {
             if($dbManager->deleteAppointment($_SESSION['user']->appointment->id)) {
                 deleteAppointmentFromSession();
                 $message = 'appointmentDeletedSuccessfully';
                 header("Location: ./userpage.php?message=$message&error=0");
+                exit();
             } else {
                 $message = 'deleteAppointmentError';
                 header("Location: ./userpage.php?message=$message&error=1");
+                exit();
             }
             
         } else if ($_POST['action'] == 'logout') {
             deleteSession();
             header("Location: ./index.php");
+            exit();
         }
     } 
         

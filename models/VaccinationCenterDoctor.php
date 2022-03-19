@@ -5,7 +5,7 @@
         private $vaccinationCenter;
 
         //constructor που κατά το validation αν αποτύχει κάνει throw ένα exception
-        function __construct($user, $vaccinationCenter, $doctorId = null ) {
+        function __construct($user, $vaccinationCenter = null, $doctorId = null ) {
             parent::__construct(
                 $user->name,
                 $user->surname,
@@ -25,11 +25,6 @@
 
         //Getters
         function __get($attr) {
-
-            if($attr == 'sex') {
-                return $this->$attr == 'male' ? 'Άνδρας' : 'Γυναίκα';
-            }
-
             return $this->$attr;
         }
         //Setters

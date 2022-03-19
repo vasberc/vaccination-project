@@ -1,12 +1,12 @@
 <?php 
     include("./controllers/sessionController.php");
-    include("./controllers/userPageController.php");
+    include("./controllers/doctorPageController.php");
     include("./utils/strings.php");
     if(!$isLoggedIn) {
         header("Location: ./signin-signup.php");
         exit();
-    } else if ($_SESSION['user']->isDoctor) {        
-        header("Location: ./doctor-page.php");
+    } else if(!$_SESSION['user']->isDoctor) {
+        header("Location: ./userpage.php");
         exit();
     }
 ?>
@@ -21,6 +21,22 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <!-- Modal Που θα εμφανίζεται για την καταχώρηση εμβολιαστικού κέντρου  πηγή: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal -->
+        <div id="myModal" class="modal">
+            <!-- Περιεχόμενο του Modal -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <?php if($vaccinationCenters) { ?>
+                <h3 class="col_item">Διαθέσιμα εμβολιαστικά κέντρα</h3>
+                <select class="col_item" name="forma" onchange="location = this.value;">
+                    <option value="?">Επιλέξτε εμβολιαστικό κέντρο</option>
+                <?php foreach($vaccinationCenters as $item) { ?> 
+                    <option value="?vaccination_center_id=<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
+                <?php } ?>
+                </select>
+                <?php } ?>
+            </div>
+        </div>
         <!--Tag όπου περιέχει τα στοιχεία του header -->
         <header>
             <!--εικόνα μέσα σε λίνκ ώστε να είναι clickable -->
@@ -42,12 +58,12 @@
                 <a href="signup-signin-instractions.php">Οδηγίες εγγραφής / εισόδου</a>
                 <a href="announcements.php">Ανακοινώσεις</a>            
             </nav>
-            <!--Tag με το βασικό περιεχόμενο της σελίδας --> 
+            <!--Tag με το βασικό περιεχόμενο τησ σελίδας --> 
             <main class="col">
             <?php  if($hasError or $hasSucceed) { ?>
                     <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
             <?php  } ?>
-            <h3 class="col_item">Προσωπικά στοιχεία</h3>
+            <h3 class="col_item">Προσωπικά στοιχεία Γιατρού</h3>
                 <table class="col_table">
                     <tr>
                         <th>Όνομα:</th>
@@ -77,30 +93,24 @@
                         <th>Email:</th>
                         <td colspan="3"><?php echo $_SESSION['user']->email; ?></td>
                     </tr>
-                </table>
-                <?php if($_SESSION['user']->appointment != null) { ?>
-                    <h3 class="col_item">Στοιχεία Ραντεβού</h3>
-                <table class="col_table">
                     <tr>
-                        <th>Εμβολιαστικό Κέντρο:</th>
-                        <td><?php echo $_SESSION['user']->appointment->vaccinationCenter->name; ?></td>                                         
+                        <th>Εμβολιαστικό κέντρο:</th>
+                        <td colspan="3"><?php if($_SESSION['user']->vaccinationCenter == null) echo 'Δεν καταχωρήθηκε'; else echo $_SESSION['user']->vaccinationCenter->name ?></td>
                     </tr>
-                    <tr>
-                        <th>Ημερομηνία:</th>
-                        <td><?php echo date("d-m-Y", strtotime($_SESSION['user']->appointment->date)); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Ώρα:</th>
-                        <td><?php echo date("H:i", strtotime($_SESSION['user']->appointment->time)); ?></td>
-                    </tr>                    
                 </table>
-                <?php } ?>
-                    <form class="hidden_forms" name="appointment" action="" method="post">                            
-                        <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->appointment != null) echo '"delete"'; else echo '"create"'; ?>>
-                        <input class="button" type="submit" value=<?php if($_SESSION['user']->appointment != null) echo '"Ακυρώστε το ραντεβού σας"'; else echo '"Κλείστε το ραντεβού σας"'; ?>>
-                    </form>
+                <!-- action="javascript:handleClick()" -->
+                    <section class="side" id="sideHiddenForms">
+                        <form class="hidden_forms" name="vaccination_center" action=<?php if($_SESSION['user']->vaccinationCenter == null) echo "javascript:displayModal()"; else echo ""; ?> method="post">                            
+                            <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter != null) echo '"registered"'; ?>>
+                            <input class="button" type="submit" value="Καταχωρήστε το εμβολιαστικό κέντρο που εργάζεστε">
+                        </form>
+                        <form class="hidden_forms" name="scheduled_appointments" action="" method="post">                            
+                            <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter == null) echo '"notRegistered"'; else echo '"scheduledAppointments"'; ?>>
+                            <input class="button" type="submit" value="Προγραμματισμένα ραντεβού">
+                        </form>
+                    </section>                   
 
-                    <form class="hidden_forms" name="appointment" action="" method="post">                            
+                    <form class="hidden_forms" name="sing_out" action="" method="post">                            
                         <input type="hidden" id="action" name="action" value="logout">
                         <input class="button" type="submit" value="Αποσύνδεση χρήστη">
                     </form>
@@ -112,5 +122,6 @@
             <div>|</div>
             <a href="./docs/privacy-policy.pdf">Πολιτική προστασίας</a>
         </footer>
+        <script src="./js/modal.js"></script>
     </body>
 </html>

@@ -9,7 +9,12 @@ $_ERROR_MESSAGES['setterOnlyForDoctors'] ="Μόνο το πεδίο doctors μπ
 $_ERROR_MESSAGES['setterOnlyForVaccinationCenter'] ="Μόνο το πεδίο vaccinationCenter μπορεί να μεταβληθεί από τα χαρακτηριστικά του VaccinationCenterDoctor";
 $_ERROR_MESSAGES['notCurrentVaccinationAgeGroup'] ="Δεν ανήκετε στην ηλικιακή ομάδα που μπορεί να εμβολιαστεί την τρέχουσα περίοδο,</br>παρακαλώ να ενημερώνεστε καθημερινά από την σελίδα οδηγίες εμβολιασμού.";
 $_ERROR_MESSAGES['deleteAppointmentError'] ="Κάτι πήγε στραβά κατά την διαγραφή του ραντεβού σας, παρακαλώ δοκιμάστε ξανά.";
+$_ERROR_MESSAGES['saveAppointmentError'] ="Κάτι πήγε στραβά κατά την δημιουργία του ραντεβού σας, παρακαλώ δοκιμάστε ξανά.";
+$_ERROR_MESSAGES['appointmentErrorDuplicateEntry'] ="Το ραντεβού δεν είναι διαθέσιμο, παρακαλώ δοκιμάστε ξανά";
+$_ERROR_MESSAGES['alreadyRegistered'] ="Έχετε καταχωρήσει ήδη το εμβολιαστικό κέντρο που εργάζεστε.";
+$_ERROR_MESSAGES['pleaseRegisterVaccinationCenter'] ="Παρακαλώ καταχωρήστε πρώτα το εμβολιαστικό κέντρο που εργάζεστε.";
 
-$_SUCCESS_MESSAGES['appointmentDeletedSuccessfully'] ="Το ραντεβού σας ακυρώθηκε με επιτυχία, μπορείτε πλέον να το προγραμματίσετε ξανά";
+$_SUCCESS_MESSAGES['appointmentDeletedSuccessfully'] ="Το ραντεβού σας ακυρώθηκε με επιτυχία, μπορείτε πλέον να το προγραμματίσετε ξανά.";
+$_SUCCESS_MESSAGES['appointmentSavedSuccessfully'] ="Το ραντεβού σας καταχωρήθηκε με επιτυχία!";
 
 ?>

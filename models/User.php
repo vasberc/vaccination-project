@@ -31,7 +31,7 @@
             $isDoctor = isset($isDoctor) ? $isDoctor : null;
 
             //Έλεγχος αν έχει γίνει το validation σωστά
-            if($name && $surname && $amka && $afm && $adt && $sex && $email !== false && $age && $mobile && isset($isDoctor)) {
+            if($name && $surname && $amka && $afm && $adt && $sex !== false && $email !== false && $age && $mobile && isset($isDoctor)) {
                 $this->id = $id;
                 $this->name = $name;
                 $this->surname = $surname;
@@ -90,8 +90,8 @@
             return preg_match($pattern, $amka);
         }
         private function sexPattern($sex) {
-            //Επιτρέπει μόνο τις λέξεις male, female            
-            return $sex == 'male' or $sex == 'female';
+            //Επιτρέπει μόνο τις λέξεις male, female ή να μην έχει συμπληρωθεί          
+            return $sex == 'male' or $sex == 'female' or $sex == null;
         }
         private function emailPattern($email) {
             //Να έχει απλά το @ αν δεν είναι άδειο          
