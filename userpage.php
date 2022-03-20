@@ -98,6 +98,10 @@
                         <td><?php echo $_SESSION['user']->appointment->vaccinationCenter->name; ?></td>                                         
                     </tr>
                     <tr>
+                        <th>Κωδικός ραντεβού:</th>
+                        <td><?php echo $_SESSION['user']->appointment->id; ?></td>
+                    </tr>
+                    <tr>
                         <th>Ημερομηνία:</th>
                         <td><?php echo date("d-m-Y", strtotime($_SESSION['user']->appointment->date)); ?></td>
                     </tr>
