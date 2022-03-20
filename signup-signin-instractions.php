@@ -22,7 +22,18 @@
                 <h2>Υπουργείο Υγείας</h2>
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
-            <button id="signin_signup" onclick=<?php if($isLoggedIn) { echo "location.href='userpage.php'"; } else { echo "location.href='signin-signup.php'"; } ?>><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?></button>
+            <button id="signin_signup" 
+                    onclick=<?php   if($isLoggedIn) {
+                                        if(!$_SESSION['user']->isDoctor) 
+                                            echo "location.href='userpage.php'"; 
+                                        else 
+                                            echo "location.href='doctor-page.php'"; 
+                                    } else { 
+                                        echo "location.href='signin-signup.php'"; 
+                                    } 
+                            ?>
+                ><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?>
+            </button>
         </header> 
         <div class="side">
             <!--Tag όπου περιέχει τα στοιχεία του μενού -->       
@@ -59,7 +70,18 @@
                         <li>Α.Μ.Κ.Α. (υποχρεωτικό)</li>
                         <li>Α.Φ.Μ. (υποχρεωτικό)</li>
                     </ul>
-                    <button id="signin_signup" onclick=<?php if($isLoggedIn) { echo "location.href='userpage.php'"; } else { echo "location.href='signin-signup.php'"; } ?>><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?></button>
+                    <button id="signin_signup" 
+                            onclick=<?php   if($isLoggedIn) {
+                                                if(!$_SESSION['user']->isDoctor) 
+                                                    echo "location.href='userpage.php'"; 
+                                                else 
+                                                    echo "location.href='doctor-page.php'"; 
+                                            } else { 
+                                                echo "location.href='signin-signup.php'"; 
+                                            } 
+                                    ?>
+                        ><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?>
+                    </button>
                 </section>               
             </main>
         </div>

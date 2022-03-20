@@ -1,5 +1,19 @@
 <?php 
     include("./controllers/sessionController.php");
+    include("./controllers/scheduledAppointmentsController.php");
+    include("./utils/strings.php");
+
+    //Σε περίπτωση που κάποιος χρήστης πατήσει το λινκ της σελίδας ενώ για κάποια από τις παρακάτω περιπτώσεις θα γίνεται redirect
+    if(!$isLoggedIn) {
+        header("Location: ./signin-signup.php");
+        exit();
+    } else if($_SESSION['user']->isDoctor == false) {
+        header("Location: ./userpage.php");
+        exit();
+    } else if($_SESSION['user']->vaccinationCenter == null) {
+        header("Location: ./doctor-page.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -42,41 +56,37 @@
                 <a href="vaccination-centers.php">Κέντρα εμβολιασμού</a>
                 <a href="vaccination-instractions.php">Οδηγίες εμβολιασμού</a>
                 <a href="signup-signin-instractions.php">Οδηγίες εγγραφής / εισόδου</a>
-                <a class="current" href="announcements.php">Ανακοινώσεις</a> 
+                <a href="announcements.php">Ανακοινώσεις</a>            
             </nav>
             <!--Tag με το βασικό περιεχόμενο τησ σελίδας --> 
             <main class="col">
-                <h1>Ανακοινώσεις</h1>
-                <section class="col block">
-                    <h3>31/01/2022</h3>
-                    <h2><a href="./announcements/announcement1.php">Ανακοίνωση 1</a></h2>
-                    <p>Περίληψη ανακοίνωσης, αυτή είναι η περίληψη της ανακ...</p>
-                </section>
-                <section class="col block">
-                    <h3>30/01/2022</h3>
-                    <h2><a href="./announcements/announcement2.php">Ανακοίνωση 2</a></h2>
-                    <p>Περίληψη ανακοίνωσης, αυτή είναι η περίληψη της ανακ...</p>
-                </section>
-                <section class="col block">
-                    <h3>29/01/2022</h3>
-                    <h2><a href="./announcements/announcement3.php">Ανακοίνωση 3</a></h2>
-                    <p>Περίληψη ανακοίνωσης, αυτή είναι η περίληψη της ανακ...</p>
-                </section>    
-                <section class="col block">
-                    <h3>28/01/2022</h3>
-                    <h2><a href="">Ανακοίνωση 4</a></h2>
-                    <p>Περίληψη ανακοίνωσης, αυτή είναι η περίληψη της ανακ...</p>
-                </section>
-                <section class="col block">
-                    <h3>27/01/2022</h3>
-                    <h2><a href="">Ανακοίνωση 5</a></h2>
-                    <p>Περίληψη ανακοίνωσης, αυτή είναι η περίληψη της ανακ...</p>
-                </section>
-                <section class="col block">
-                    <h3>26/01/2022</h3>
-                    <h2><a href="">Ανακοίνωση 6</a></h2>
-                    <p>Περίληψη ανακοίνωσης, αυτή είναι η περίληψη της ανακ...</p>
-                </section>    
+            <?php  if($hasError or $hasSucceed) { ?>
+                    <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
+            <?php  } ?>
+            <table class="col_table" id="appointments_table">
+                    <tr>
+                        <th>Κωδικός ραντεβού</th>
+                        <th>Ονοματεπώνυμο πολίτη</th>
+                        <th>Ημερομηνία</th>
+                        <th>Ώρα</th>
+                        <th>Κατάσταση</th>
+                    </tr>
+                <?php foreach($scheduledAppointments as $item) { 
+                        $user = $dbManager->getUserFromDbById($item->user); ?>
+                    <tr>
+                        <td><?php echo $item->id; ?></td>
+                        <td><?php echo $user->surname." ".$user->name; ?></td>
+                        <td><?php echo date("d-m-Y", strtotime($item->date)); ?></td>
+                        <td><?php echo date("H:i", strtotime($item->time)); ?></td>
+                        <td class=<?php if($item->completed) echo "row_completed"; else echo "row_incomplete" ?>>
+                        <select name="forma" onchange="location = this.value;">
+                            <option value="?"><?php if($item->completed) echo "Ολοκληρώθηκε"; else echo "Μη ολοκληρωμένο" ?></option>
+                            <option value=<?php if($item->completed) echo "\"?appointment_id=$item->id&completed=".!$item->completed."\""; else echo "\"?appointment_id=$item->id&completed=".!$item->completed."\""; ?>><?php if($item->completed) echo "Μη ολοκληρωμένο"; else echo "Ολοκληρώθηκε" ?></option>
+                        </td>
+                    </tr>
+                <?php } ?>                    
+                </table>
+                
             </main>
         </div>
         <!--Tag όπου περιέχει τα στοιχεία του footer -->  

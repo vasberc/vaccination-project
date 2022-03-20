@@ -13,8 +13,14 @@ $_ERROR_MESSAGES['saveAppointmentError'] ="Κάτι πήγε στραβά κατ
 $_ERROR_MESSAGES['appointmentErrorDuplicateEntry'] ="Το ραντεβού δεν είναι διαθέσιμο, παρακαλώ δοκιμάστε ξανά";
 $_ERROR_MESSAGES['alreadyRegistered'] ="Έχετε καταχωρήσει ήδη το εμβολιαστικό κέντρο που εργάζεστε.";
 $_ERROR_MESSAGES['pleaseRegisterVaccinationCenter'] ="Παρακαλώ καταχωρήστε πρώτα το εμβολιαστικό κέντρο που εργάζεστε.";
+$_ERROR_MESSAGES['registrationError'] ="Κάτι πήγε στραβά κατά την καταχώρηση του εμβολιαστικού κέντρου,<br>παρακαλώ προσπαθήστε ξανά.";
+$_ERROR_MESSAGES['statusChangedError'] ="Κάτι πήγε στραβά κατά την αλλαγή της κατάστασης του ραντεβού,<br>παρακαλώ προσπαθήστε ξανά.";
 
 $_SUCCESS_MESSAGES['appointmentDeletedSuccessfully'] ="Το ραντεβού σας ακυρώθηκε με επιτυχία, μπορείτε πλέον να το προγραμματίσετε ξανά.";
 $_SUCCESS_MESSAGES['appointmentSavedSuccessfully'] ="Το ραντεβού σας καταχωρήθηκε με επιτυχία!";
+$_SUCCESS_MESSAGES['registrationSuccess'] ="Το εμβολιαστικό κέντρο καταχωρήθηκε με επιτυχία!";
+$_SUCCESS_MESSAGES['statusChangedSuccess'] ="Η κατάσταση του ραντεβού άλλαξε με επιτυχία!";
+
+
 
 ?>

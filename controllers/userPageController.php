@@ -5,6 +5,9 @@
     //Μεταβλητή που θα λέει στην σελίσα αν υπάρχει σφάλμα για να εμφανίζει το ανάλογο μήνυμα
     $hasError = isset($_GET['error']) ? $_GET['error'] == 1 ? true : false : false;
     $hasSucceed = isset($_GET['error']) ? $_GET['error'] == 0 ? true : false : false;
+    //Ανάκτηση του ραντεβού του χρήστη, σε περίπτωση που είναι ήδη μέσα και ο Γιατρός του αλλάξει status να έχει ενημερωθεί
+    $_SESSION['user']->appointment = $dbManager->getUserAppointmentFromDb($_SESSION['user']);
+    
     
     if(isset($_POST['action'])) {
         if($_POST['action'] == 'create') {

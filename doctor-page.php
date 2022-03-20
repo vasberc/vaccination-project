@@ -25,17 +25,20 @@
         <div id="myModal" class="modal">
             <!-- Περιεχόμενο του Modal -->
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="closeModal">&times;</span>
                 <?php if($vaccinationCenters) { ?>
-                <h3 class="col_item">Διαθέσιμα εμβολιαστικά κέντρα</h3>
-                <select class="col_item" name="forma" onchange="location = this.value;">
-                    <option value="?">Επιλέξτε εμβολιαστικό κέντρο</option>
+                <h4 class="col_item">Διαθέσιμα εμβολιαστικά κέντρα</h4>
+                <select class="col_item" name="forma" onchange="javascript:handleSelected(this.value)">
+                    <option value="">Επιλέξτε εμβολιαστικό κέντρο</option>
                 <?php foreach($vaccinationCenters as $item) { ?> 
-                    <option value="?vaccination_center_id=<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
+                    <option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
                 <?php } ?>
                 </select>
                 <?php } ?>
             </div>
+            <form class="hidden_forms" id="hidden_modal_form" name="register" action="" method="post">                            
+                <input type="hidden" id="register_vaccination_center_with_id" name="register_vaccination_center_with_id" value="">
+            </form>
         </div>
         <!--Tag όπου περιέχει τα στοιχεία του header -->
         <header>
@@ -47,7 +50,18 @@
                 <h2>Υπουργείο Υγείας</h2>
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
-            <button id="signin_signup" onclick=<?php if($isLoggedIn) { echo "location.href='userpage.php'"; } else { echo "location.href='signin-signup.php'"; } ?>><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?></button>
+            <button id="signin_signup" 
+                    onclick=<?php   if($isLoggedIn) {
+                                        if(!$_SESSION['user']->isDoctor) 
+                                            echo "location.href='userpage.php'"; 
+                                        else 
+                                            echo "location.href='doctor-page.php'"; 
+                                    } else { 
+                                        echo "location.href='signin-signup.php'"; 
+                                    } 
+                            ?>
+                ><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?>
+            </button>
         </header> 
         <div class="side">
             <!--Tag όπου περιέχει τα στοιχεία του μενού -->       
@@ -100,7 +114,7 @@
                 </table>
                 <!-- action="javascript:handleClick()" -->
                     <section class="side" id="sideHiddenForms">
-                        <form class="hidden_forms" name="vaccination_center" action=<?php if($_SESSION['user']->vaccinationCenter == null) echo "javascript:displayModal()"; else echo ""; ?> method="post">                            
+                        <form class="hidden_forms" name="vaccination_center" action=<?php if($_SESSION['user']->vaccinationCenter == null) echo "javascript:displayModal()"; else echo '""'; ?> method="post">                            
                             <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter != null) echo '"registered"'; ?>>
                             <input class="button" type="submit" value="Καταχωρήστε το εμβολιαστικό κέντρο που εργάζεστε">
                         </form>

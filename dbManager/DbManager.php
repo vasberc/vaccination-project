@@ -178,14 +178,12 @@
             if($result) {
 			    if($result && mysqli_num_rows($result) > 0) {
                     $vaccinationCenterData = mysqli_fetch_assoc($result);
-                    $vaccinationCenterDoctorsId = $this->getVaccinationCenterDoctorsIdFromDb($vaccinationCenterData['vaccination_center_id']);
                     $vaccinationCenter = new VaccinationCenter(
                         $vaccinationCenterData['vaccination_center_id'],
                         $vaccinationCenterData['name'],
                         $vaccinationCenterData['address'],
                         $vaccinationCenterData['post_code'],
-                        $vaccinationCenterData['telephone_number'],
-                        $vaccinationCenterDoctorsId
+                        $vaccinationCenterData['telephone_number']
                     );
 
                     mysqli_free_result($result);
@@ -230,7 +228,8 @@
                         $item['user_id'],
                         $item['date'],
                         $item['time'],
-                        $item['completed'] == "1"
+                        $item['completed'] == "1",
+                        $item['appointment_id']
                     );
                     $i = $i + 1	;
                 }
@@ -274,5 +273,68 @@
                 }                
             } else return true;
             mysqli_close($con);            
+        }
+
+        public function saveVaccinationCenterDoctor($vaccinationCenterId, $doctorId) {
+            $con = $this->connect();
+            $query = "INSERT INTO vaccination_centers_doctors(vaccination_center_id, doctor_id)
+                    VALUES (
+                        '$vaccinationCenterId', 
+                        '$doctorId'
+                    )";
+            if(!mysqli_query($con, $query)) {             
+                mysqli_close($con);
+                return false;
+                            
+            } else {
+                mysqli_close($con);
+                return true;
+            }
+            
+        }
+
+        //Function που βρίσκει από την βάση τον χρήστη με το δοθέν id
+        public function getUserFromDbById($userId) {
+            $con = $this->connect();
+            $query = "select * from users where user_id = '".$userId."' limit 1";
+            $result = mysqli_query($con, $query);
+            mysqli_close($con);
+            if($result) {
+			    if($result && mysqli_num_rows($result) > 0) {
+                    $userData = mysqli_fetch_assoc($result);
+                    $isDoctor = $userData['isDoctor'] == 1 ? true : false;
+                    $email = isset($userData['email']) && $userData['email'] != false ? $userData['email'] : null;
+                    $user = new User(
+                        $userData['name'],
+                        $userData['surname'],
+                        $userData['amka'],
+                        $userData['afm'],
+                        $userData['adt'],
+                        $userData['sex'],
+                        $email,
+                        (int)$userData['age'],
+                        $userData['mobile'],
+                        $isDoctor,
+                        (int)$userData['user_id']
+                    );
+                    mysqli_free_result($result);
+
+                    return $user;
+                }
+            }
+            return null;
+        }
+
+        public function setStatusOfAppointment($appointmentId, $completed) {
+            $con = $this->connect();
+            $query = "UPDATE appointments SET `completed`='$completed' WHERE appointment_id='$appointmentId'";
+            if(!mysqli_query($con, $query)) {             
+                mysqli_close($con);
+                return false;
+                            
+            } else {
+                mysqli_close($con);
+                return true;
+            }
         }
     } 

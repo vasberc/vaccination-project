@@ -14,10 +14,6 @@
             $message = 'alreadyRegistered'; 
             header("Location: ./doctor-page.php?message=$message&error=1");
             exit();
-        } else if ($_POST['action'] == 'register') {
-            $message = 'alreadyRegistered'; 
-            header("Location: ./doctor-page.php?message=$message&error=0");
-            exit();
         } else if ($_POST['action'] == 'notRegistered') {
             $message = 'pleaseRegisterVaccinationCenter'; 
             header("Location: ./doctor-page.php?message=$message&error=1");
@@ -31,6 +27,19 @@
             header("Location: ./index.php");
             exit();
         }
-    } 
+    } else if (isset($_POST['register_vaccination_center_with_id'])) {
+        if($dbManager->saveVaccinationCenterDoctor($_POST['register_vaccination_center_with_id'], $_SESSION['user']->id)) {
+            $doctor = $dbManager->getDoctorFromDbByUser($_SESSION['user']);
+            if($doctor) {
+                $_SESSION['user'] = $doctor;
+                $message = 'registrationSuccess'; 
+                header("Location: ./doctor-page.php?message=$message&error=0");
+                exit();
+            }                
+        }
+        $message = 'registrationError'; 
+        header("Location: ./doctor-page.php?message=$message&error=1");
+        exit();            
+    }
         
 ?>

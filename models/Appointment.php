@@ -29,9 +29,13 @@
                 case 'completed':
                     $this->$atrr = $value;                  
                     break;
+                
+                case 'user':
+                    $this->$atrr = $value;                  
+                    break;
                     
                 default:
-                    $exMessage = 'setterOnlyForCompleted';                            
+                    $exMessage = 'setterOnlyForCompletedAndUser';                            
                     throw new Exception($exMessage);
                     break;
             }

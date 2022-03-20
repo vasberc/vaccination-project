@@ -31,7 +31,18 @@
                 <h2>Υπουργείο Υγείας</h2>
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
-            <button id="signin_signup" onclick=<?php if($isLoggedIn) { echo "location.href='userpage.php'"; } else { echo "location.href='signin-signup.php'"; } ?>><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?></button>
+            <button id="signin_signup" 
+                    onclick=<?php   if($isLoggedIn) {
+                                        if(!$_SESSION['user']->isDoctor) 
+                                            echo "location.href='userpage.php'"; 
+                                        else 
+                                            echo "location.href='doctor-page.php'"; 
+                                    } else { 
+                                        echo "location.href='signin-signup.php'"; 
+                                    } 
+                            ?>
+                ><?php if(!$isLoggedIn) { echo  'Είσοδος / Εγγραφή'; } else { echo 'Σελίδα χρήστη'; }?>
+            </button>
         </header> 
         <div class="side">
             <!--Tag όπου περιέχει τα στοιχεία του μενού -->       
@@ -80,6 +91,7 @@
                 </table>
                 <?php if($_SESSION['user']->appointment != null) { ?>
                     <h3 class="col_item">Στοιχεία Ραντεβού</h3>
+                    <?php if(!$_SESSION['user']->appointment->completed) { ?>
                 <table class="col_table">
                     <tr>
                         <th>Εμβολιαστικό Κέντρο:</th>
@@ -93,17 +105,21 @@
                         <th>Ώρα:</th>
                         <td><?php echo date("H:i", strtotime($_SESSION['user']->appointment->time)); ?></td>
                     </tr>                    
-                </table>
+                </table>                
+                    <?php } else { ?>
+                <p class="announcement">Συγχαρητήρια έχετε ολοκληρώσει επιτυχώς τον εμβολιασμό σας!</p>
+                    <?php } ?>
+                <?php } ?>  
+                <?php if($_SESSION['user']->appointment == null or !$_SESSION['user']->appointment->completed) { ?>
+                <form class="hidden_forms" name="appointment" action="" method="post">                            
+                    <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->appointment != null) echo '"delete"'; else echo '"create"'; ?>>
+                    <input class="button" type="submit" value=<?php if($_SESSION['user']->appointment != null) echo '"Ακυρώστε το ραντεβού σας"'; else echo '"Κλείστε το ραντεβού σας"'; ?>>
+                </form>
                 <?php } ?>
-                    <form class="hidden_forms" name="appointment" action="" method="post">                            
-                        <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->appointment != null) echo '"delete"'; else echo '"create"'; ?>>
-                        <input class="button" type="submit" value=<?php if($_SESSION['user']->appointment != null) echo '"Ακυρώστε το ραντεβού σας"'; else echo '"Κλείστε το ραντεβού σας"'; ?>>
-                    </form>
-
-                    <form class="hidden_forms" name="appointment" action="" method="post">                            
-                        <input type="hidden" id="action" name="action" value="logout">
-                        <input class="button" type="submit" value="Αποσύνδεση χρήστη">
-                    </form>
+                <form class="hidden_forms" name="appointment" action="" method="post">                            
+                    <input type="hidden" id="action" name="action" value="logout">
+                    <input class="button" type="submit" value="Αποσύνδεση χρήστη">
+                </form>   
             </main>
         </div>
         <!--Tag όπου περιέχει τα στοιχεία του footer -->  

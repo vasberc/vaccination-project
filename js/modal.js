@@ -20,3 +20,12 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+function handleSelected(selectedId) {
+    var input = document.getElementById("register_vaccination_center_with_id");
+    input.value = selectedId;
+    var form = document.getElementById("hidden_modal_form");
+    form.submit(); 
+
+
+}
