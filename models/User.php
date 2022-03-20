@@ -1,4 +1,10 @@
 <?php
+
+    /** 
+     * Κλάση Appointment, αντιστοιχεί στον πίνακα του db appointments και περιέχει όλα πεδία του πίνακα,
+     * επίσης περιέχει και ένα πεδίο appointment το οποίο αντιστοιχεί σε αντικείμενο appointment από τον
+     * πίνακα appointments όπου υπάρχει σχέση 1 προς πολλά
+     */
     class User {
 
         protected $id;
@@ -14,7 +20,13 @@
         protected $isDoctor;
         private $appointment;
 
-        //constructor που κατά το validation αν αποτύχει κάνει throw ένα exception
+        /** 
+         * constructor με το id να έχει default τιμή null, γιατί αντιστοιχεί στο πεδίο user_id
+         * και το παίρνουμε μετά την εγγραφή στην βάση δεδομένων
+         * Ο constructor επίσης κάνει validation στα πεδία, σε περίπτωση που για κάποιο λόγο ξεφύγει
+         * κάτι από το front end validation ή γίνει κάποιο προγραμματιστικό λάθος.
+         * Σε περίπτωση που δεν περάσει το validation κάνει throw exception με το ανάλογο message.
+         */
         function __construct($name, $surname, $amka, $afm, $adt, $sex, $email, $age, $mobile, $isDoctor, $id = null) {
             
             //Εδώ γίνεται το validation καλώντας τις ανάλογες συναρτήσεις
@@ -55,13 +67,7 @@
         function __get($attr) {
             return $this->$attr;
         }
-        // function  getAppointment(): Appointment {
-        //     return $this->appointment;
-        // }
-        // function setAppointment(Appointment $appointment) {
-        //     $this->appointment = $appointment;
-        // }
-        //Setters
+        //Setters μόνο το πεδίο appointment μπορεί να αλλάζει
         function __set($atrr, $value) {
             switch ($atrr) {
                 case 'appointment':
@@ -94,7 +100,7 @@
             return $sex == 'male' or $sex == 'female' or $sex == null;
         }
         private function emailPattern($email) {
-            //Να έχει απλά το @ αν δεν είναι άδειο          
+            //Να έχει απλά το @
             return strpos($email, '@') !== false ;
         }
         private function mobilePattern($mobile) {

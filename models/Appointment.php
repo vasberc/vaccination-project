@@ -1,4 +1,8 @@
 <?php
+
+    /** 
+     * Κλάση Appointment, αντιστοιχεί στον πίνακα του db appointments και περιέχει όλα πεδία του πίνακα
+     */
     class Appointment {
 
         private $id;
@@ -8,7 +12,10 @@
         private $time;
         private $completed;
 
-        //constructor που κατά το validation αν αποτύχει κάνει throw ένα exception
+        /** 
+         * constructor με το id να έχει default τιμή null, γιατί αντιστοιχεί στο πεδίο appointment_id
+         * και το παίρνουμε μετά την εγγραφή στην βάση δεδομένων
+         */
         function __construct($vaccinationCenter, $user, $date, $time, $completed, $id = null) {
             $this->id = $id;
             $this->vaccinationCenter = $vaccinationCenter;
@@ -23,19 +30,15 @@
 
             return $this->$attr;
         }
-        //Setters
+        //Setters, δυνατότητα να αλλάζει μόνο το πεδίο completed
         function __set($atrr, $value) {
             switch ($atrr) {
                 case 'completed':
                     $this->$atrr = $value;                  
                     break;
-                
-                case 'user':
-                    $this->$atrr = $value;                  
-                    break;
-                    
+
                 default:
-                    $exMessage = 'setterOnlyForCompletedAndUser';                            
+                    $exMessage = 'setterOnlyForCompleted';                            
                     throw new Exception($exMessage);
                     break;
             }

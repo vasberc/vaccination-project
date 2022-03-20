@@ -1,31 +1,35 @@
-// Get the modal
+//Script που διαχειρίζεται το modal επιλογής εμβολιαστικού κέντρου
+
+//Το στοιχείο myModal περιλαμβάνει και το διαφανές background γύρω από το modal
 var modal = document.getElementById("myModal");
 
-// Get the <span> element that closes the modal
+//Το στοιχείο που κλείνει το modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
+//Function που εμφανίζει το modal
 function displayModal() {
     modal.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
+//Click στο span κλείνει το Modal
 span.onclick = function() {
     modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
+//Όταν ο χρήστης κάνει κλικ έξω από το modal στο διαφανές background κλείνει το Modal 
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
 }
-
+/**
+ * Function Που καλείται στην onchange του drop down,
+ * θέτει σε ένα hidden form το value στο id του επιλεγμένου
+ * vaccination center και υποβάλει την φόρμα
+ */ 
 function handleSelected(selectedId) {
     var input = document.getElementById("register_vaccination_center_with_id");
     input.value = selectedId;
     var form = document.getElementById("hidden_modal_form");
-    form.submit(); 
-
-
+    form.submit();
 }

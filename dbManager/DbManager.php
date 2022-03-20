@@ -23,7 +23,10 @@
                 return $con;
             }
         }
-        //Function που εισάγει εγγραφή χρήστη στην βάση
+        /**
+         * Function που εισάγει εγγραφή χρήστη στην βάση, σε περίπτωση σφάλματος
+         * κάνει trow ένα exception με το ανάλογο μήνυμα 
+         */  
         public function saveUserToDb(User $user) {
             $con = $this->connect();
             $isDoctor = $user->isDoctor ? 1 : 0 ;
@@ -41,7 +44,9 @@
                         '$isDoctor'                          
                     )";
             if(!mysqli_query($con, $query)) {
+                //Σε περίπτωση που δεν εκτέλέστηκε το query εμφάνιση ανάλογου σφάλματος
                 if((stripos(mysqli_error($con), "Duplicate entry") !== false)) {
+                    //Duplicate entry εμφανίζεται σύμφωνα με τα constraints του πίνακα
                     $message = 'userSignUpErrorDuplicateEntry';                    
                 } else {
                     $message = 'userSignUpError';
@@ -51,7 +56,11 @@
             }
             mysqli_close($con);            
         }
-        //Function που βρίσκει από την βάση τον χρήστη με το δοθέν ΑΜΚΑ
+        /**
+         * Function που βρίσκει από την βάση τον χρήστη με το δοθέν ΑΜΚΑ,
+         * επιστρέφει αντικείμενο User,
+         * σε περίπτωση σφάλματος null
+         */
         public function getUserFromDbByAmka($amka) {
             $con = $this->connect();
             $amka = mysqli_real_escape_string($con, $amka);
@@ -86,7 +95,11 @@
             }
             return null;
         }
-        //Function που βρίσκει από την βάση τον χρήστη με το δοθέν ΑΜΚΑ και ελέγχει αν ταιριάζει με το δοθέν ΑΦΜ
+        /**
+         * Function που βρίσκει από την βάση τον χρήστη με το δοθέν ΑΜΚΑ και ελέγχει αν ταιριάζει με το δοθέν ΑΦΜ
+         * επιστρέφει αντικείμενο User,
+         * σε περίπτωση σφάλματος null
+         */
         public function getUserFromDbForLogin($amka, $afm) {
             $user = $this->getUserFromDbByAmka($amka);
             if(isset($user)) {
@@ -96,7 +109,14 @@
             }
             return null;           
         }
-        //Function που βρίσκει το ραντεβού του χρήστη
+        /**
+         * Function που βρίσκει το ραντεβού του χρήστη
+         * επιστρέφει αντικείμενο Appointment,
+         * σε περίπτωση σφάλματος null
+         * 
+         * Στο πεδίο vaccinationCenter περιέχει αντικείμενο VaccinationCenter
+         * ή null σε περίπτωση σφάλματος κατά την ανάκτησή του
+         */
         public function getUserAppointmentFromDb($user) {
             $con = $this->connect();
             $query = "select * from appointments where user_id = '".$user->id."' limit 1";
@@ -120,8 +140,14 @@
             $appointment = null;
             return $appointment;
         }
-
-        //Function που βρίσκει από την βάση τον γιατρό με το δοθέν χρήστη
+        /**
+         * Function που βρίσκει από την βάση τον γιατρό με το δοθέν χρήστη
+         * επιστρέφει αντικείμενο VaccinationCenterDoctor που είναι υποκλάση του User,
+         * σε περίπτωση σφάλματος null
+         * 
+         * Στο πεδίο vaccinationCenter περιέχει αντικείμενο VaccinationCenter
+         * ή null σε περίπτωση σφάλματος κατά την ανάκτησή του
+         */
         public function getDoctorFromDbByUser($user) {
             $con = $this->connect();
             $query = "select * from vaccination_centers_doctors where doctor_id = '".$user->id."' limit 1";
@@ -144,8 +170,11 @@
             }
             return null;
         }
-
-        //Function που βρίσκει από την βάση όλα τα κέντρα εμβολιασμού
+        /**
+         * Function που βρίσκει από την βάση όλα τα κέντρα εμβολιασμού
+         * επιστρέφει πίνακα που περιέχει αντικείμενα VaccinationCenter,
+         * σε περίπτωση σφάλματος false
+         */
         public function getVaccinationCenters() {
             $con = $this->connect();
             $query = "select * from `vaccination-centers`";
@@ -168,9 +197,12 @@
                 return false;
             }
         }
-
-        //Function που βρίσκει από την βάση το κέντρο εμβολιασμού με το δοθέν id
-        public function getVaccinationCenterByIdFromDb($vaccinationCenterId) {
+        /**
+         * Function που βρίσκει από την βάση το κέντρο εμβολιασμού με το δοθέν id
+         * επιστρέφει αντικείμενο VaccinationCenter,
+         * σε περίπτωση σφάλματος null
+         */
+        private function getVaccinationCenterByIdFromDb($vaccinationCenterId) {
             $con = $this->connect();
             $query = "select * from `vaccination-centers` where vaccination_center_id = '".$vaccinationCenterId."' limit 1";
             $result = mysqli_query($con, $query);
@@ -193,28 +225,11 @@
             }
             return null;
         }
-
-        //Function που βρίσκει από την βάση το κέντρο εμβολιασμού με το δοθέν id
-        public function getVaccinationCenterDoctorsIdFromDb($vaccinationCenterId) {
-            $con = $this->connect();
-            $query = "select * from vaccination_centers_doctors where vaccination_center_id = '".$vaccinationCenterId."' ";
-            $result = mysqli_query($con, $query);
-            mysqli_close($con);
-            if($result) {
-			    if($result && mysqli_num_rows($result) > 0) {
-                    $i = 0;
-                    foreach($result as $item){ 
-                        $getVaccinationCenterDoctorsId[$i] = $item['doctor_id'];
-                        $i = $i + 1	;
-                    }
-                    mysqli_free_result($result);
-
-                    return $getVaccinationCenterDoctorsId;
-                }
-            }
-            return null;
-        }
-
+        /**
+         * Function που βρίσκει τα ραντεβού ενός κέντρου εμβολιασμού με το δοθέν id του κέντρου
+         * επιστρέφει πίνακα με αντικείμενα Appointment ταξινομημένα με βάση το date και το time,
+         * σε περίπτωση σφάλματος false
+         */
         public function getAppointmentsOfSelectedVaccinationCenter($selectedVaccinationCenterId) {
             $con = $this->connect();
             $query = "select * from appointments where vaccination_center_id = '".$selectedVaccinationCenterId."' ORDER BY date ASC, time ASC";
@@ -238,7 +253,11 @@
                 return false;
             }
         }
-
+        /**
+         * Function που διαγράφει ένα ραντεβού από την βάση με το δοθέν id
+         * επιστρέφει true,
+         * σε περίπτωση σφάλματος false
+         */
         public function deleteAppointment($appointmentId) {
             $con = $this->connect();
             $query = "delete from appointments where appointment_id = '".$appointmentId."' ";
@@ -251,8 +270,12 @@
             mysqli_free_result($result);
             return $succeed;
         }
-
-        //Function που εισάγει εγγραφή χρήστη στην βάση
+        /**
+         * Function που εισάγει ένα ραντεβού στην βάση
+         * επιστρέφει true,
+         * σε περίπτωση σφάλματος αν είναι duplicate entry κάνει trow exception
+         * με το ανάλογο μήνυμα αλλιώς επιστρέφει false
+         */
         public function saveNewAppointment($vaccinationCenterId, $timeslot, $user) {
             $con = $this->connect();
             $query = "INSERT INTO appointments(vaccination_center_id, user_id, date, time)
@@ -274,7 +297,11 @@
             } else return true;
             mysqli_close($con);            
         }
-
+        /**
+         * Function που εισάγει ένα εγγραφή στον πίνακα vaccination_centers_doctors στην βάση
+         * επιστρέφει true,
+         * σε περίπτωση σφάλματος επιστρέφει false
+         */
         public function saveVaccinationCenterDoctor($vaccinationCenterId, $doctorId) {
             $con = $this->connect();
             $query = "INSERT INTO vaccination_centers_doctors(vaccination_center_id, doctor_id)
@@ -292,8 +319,11 @@
             }
             
         }
-
-        //Function που βρίσκει από την βάση τον χρήστη με το δοθέν id
+        /**
+         * Function που βρίσκει από την βάση τον χρήστη με το δοθέν id
+         * επιστρέφει αντικείμενο User,
+         * σε περίπτωση σφάλματος επιστρέφει null
+         */
         public function getUserFromDbById($userId) {
             $con = $this->connect();
             $query = "select * from users where user_id = '".$userId."' limit 1";
@@ -324,7 +354,11 @@
             }
             return null;
         }
-
+        /**
+         * Function που ενημερώνει το πεδίο completed στο πίνακα appointments στην εγγραφή με το δοθέν id
+         * επιστρέφει true,
+         * σε περίπτωση σφάλματος επιστρέφει false
+         */
         public function setStatusOfAppointment($appointmentId, $completed) {
             $con = $this->connect();
             $query = "UPDATE appointments SET `completed`='$completed' WHERE appointment_id='$appointmentId'";
