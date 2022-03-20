@@ -4,7 +4,7 @@
 var modal = document.getElementById("myModal");
 
 //Το στοιχείο που κλείνει το modal
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("closeModal")[0];
 
 //Function που εμφανίζει το modal
 function displayModal() {

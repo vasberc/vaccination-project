@@ -3,6 +3,10 @@
     include("./controllers/signinSignupController.php");
     include("./utils/strings.php");
     if($isLoggedIn) {
+        if($_SESSION['user']->isDoctor) {            
+        header("Location: ./doctor-page.php");
+        exit();
+        }
         header("Location: ./userpage.php");
         exit();
     }

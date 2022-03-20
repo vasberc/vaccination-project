@@ -7,8 +7,7 @@
     
     //Αν υποβλήθηκε η φόρμα της εγγραφής
     if(isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['amka1']) && 
-    isset($_POST['afm1']) && isset($_POST['adt']) && isset($_POST['age']) && 
-    isset($_POST['sex']) && isset($_POST['mobile']) && isset($_POST['role'])) {
+    isset($_POST['afm1']) && isset($_POST['adt']) && isset($_POST['age']) && isset($_POST['mobile']) && isset($_POST['role'])) {
         //Η Δημιουργία των αντικειμένων User μπορεί να προκαλέσει exception οπότε γίνεται σε try block
         try {
             //Αρχικοποίηση της μεταβλητής isDoctor
@@ -61,11 +60,12 @@
                     startSession($user);
                     header("Location: ./doctor-page.php");
                     exit();
-                }
-                //Ξεκινάμε το session για τον χρήστη αυτό και μεταφερόμαστε αυτόματα στην σελίδα του χρήστη
-                startSession($user);
-                header("Location: ./userpage.php");
-                exit();
+                } else {
+                    //Ξεκινάμε το session για τον χρήστη αυτό και μεταφερόμαστε αυτόματα στην σελίδα του χρήστη
+                    startSession($user);
+                    header("Location: ./userpage.php");
+                    exit();
+                }                
             } catch (Exception $ex) {
                 $message = $ex->getMessage();
                 //Αν αποτύχει η αποθήκευση εμφάνιση μηνύματος ανάλογα το σφάλμα                
@@ -91,16 +91,21 @@
                         null,
                         null
                     );
+                    startSession($user);
+                    header("Location: ./doctor-page.php");
+                    exit();
                 } else {
                     $user = $doctor;
                     startSession($user);
                     header("Location: ./doctor-page.php");
                     exit();
                 }
+            } else {
+                startSession($user);
+                header("Location: ./userpage.php");
+                exit();
             }
-            startSession($user);
-            header("Location: ./userpage.php");
-            exit();
+            
         } else {
             //Αλλιώς φορτώνουμε πάλι την σελίδα με error
             $message = 'userSignInError';

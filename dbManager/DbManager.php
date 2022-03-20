@@ -150,7 +150,7 @@
          */
         public function getDoctorFromDbByUser($user) {
             $con = $this->connect();
-            $query = "select * from vaccination_centers_doctors where doctor_id = '".$user->id."' limit 1";
+            $query = "select * from vaccination_centers_doctors where user_id = '".$user->id."' limit 1";
             $result = mysqli_query($con, $query);
             mysqli_close($con);
             if($result) {
@@ -202,7 +202,7 @@
          * επιστρέφει αντικείμενο VaccinationCenter,
          * σε περίπτωση σφάλματος null
          */
-        private function getVaccinationCenterByIdFromDb($vaccinationCenterId) {
+        public function getVaccinationCenterByIdFromDb($vaccinationCenterId) {
             $con = $this->connect();
             $query = "select * from `vaccination-centers` where vaccination_center_id = '".$vaccinationCenterId."' limit 1";
             $result = mysqli_query($con, $query);
@@ -302,12 +302,12 @@
          * επιστρέφει true,
          * σε περίπτωση σφάλματος επιστρέφει false
          */
-        public function saveVaccinationCenterDoctor($vaccinationCenterId, $doctorId) {
+        public function saveVaccinationCenterDoctor($vaccinationCenterId, $userId) {
             $con = $this->connect();
-            $query = "INSERT INTO vaccination_centers_doctors(vaccination_center_id, doctor_id)
+            $query = "INSERT INTO vaccination_centers_doctors(vaccination_center_id, user_id)
                     VALUES (
                         '$vaccinationCenterId', 
-                        '$doctorId'
+                        '$userId'
                     )";
             if(!mysqli_query($con, $query)) {             
                 mysqli_close($con);
