@@ -35,53 +35,47 @@ header {
     margin:20px;/*δημιουργία κενού εξωτερικά μεταξύ άλλων στοιχείων*/
     
 }
-
-.side { /*επιλογέας των 2 στοιχείων στην μέση της σελίδας με id*/
+/*επιλογέας των 2 στοιχείων στην μέση της σελίδας με id*/
+.side { 
     display: flex;/*τοποθέτηση flex*/
     align-items: stretch;/*τα στοιχεία θα πάρουν όλο το ύψος*/
     flex-direction: row;/*κατεύθυνση flex οριζόντια*/
 }
-
-main.side {/*χαρακτηριστικά που θέλουμε όταν το main είναι side*/
+/*χαρακτηριστικά που θέλουμε όταν το main είναι side*/
+main.side {
     width: 100%;
     padding: 20px;    
     justify-content: center;
 }
-
+/*χαρακτηριστικά που θέλουμε όταν το main είναι singcol*/
 main.singcol {
     width: 100%;
-    /* justify-content: stretch; */
-    /* justify-self: center; */
-    /* justify-items: center; */
-    /* align-content: center; */
-    /* justify-content: center; */
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-
+/*Τα table που είναι μέσα σε στοιχεία με το περιεχόμενο να είναι 1 στήλη*/
 .col_table{
     display: flex;
     justify-content: center;
     border-collapse: collapse;
     margin-bottom: 10px;
 }
-
+/*Χαρακτηριστικά που έχουν όλα τα κελιά πινάκων στο site*/
 td, th {
     border: 1px solid #000000;
     text-align: left;
     padding: 8px;
 }
-
+/*Background για τις γραμμές που εμφανίζονται σε άρτια σειρά*/
 tr:nth-child(even) {
     background-color: #dddddd;
-}
-  
-
+}  
+/*Τα section tag με κλάση side*/
 .side section {
     padding: 5px;
 }
-
+/*Κλάση col, δίνει την εμφάνιση στήλης*/
 .col {
     display: flex;/*τοποθέτηση flex*/
     align-items: stretch;/*τα στοιχεία θα πάρουν όλο το ύψος*/
@@ -89,17 +83,17 @@ tr:nth-child(even) {
     justify-content: center;
     width: 100%;
 }
-
+/*Nav tag*/
 nav {  
     background-color: #3d405b;    
     border-radius: 5%;/*δημιουργία καμπύλης στις γωνίες*/
     width: min-content;
 }
-
+/*main tag*/
 main {
     padding: 20px;/*Δημιουργία κενού εσωτερικά στο κυρίως περιεχόμενο γύρω από τα στοιχεία*/
 }
-
+/*Όλα τα a tag μέσα στο στοιχείο με id nav_li*/
 #nav_li > a {
     padding: 15px;/*Δημιουργία κενού εσωτερικά στο κουμπί του μενού γύρω από τα στοιχεία*/
     font-weight: bold;
@@ -111,16 +105,16 @@ main {
     border-radius: 5px;/*δημιουργία καμπύλης στις γωνίες*/
     background-color: #f2cc8f;
 }
-
-#nav_li > a.current{/*κλάση που έχει δοθεί στο κουμπί του μενού που αντιστοιχεί στην τρέχουσα σελίδα*/
+/*Όλα τα a tag με κλάση current μέσα στο στοιχείο με id nav_li*/
+#nav_li > a.current{
     background-color: #f4f1de;
     pointer-events: none;/*απενεργοποιεί τις δυνατότητες που έχουν τα κουμπιά*/
 }
-
+/*Όλα τα a tag που το ποντίκι περνάει από πάνω τους μέσα στο στοιχείο με id nav_li*/
 #nav_li > a:hover {/*όταν περάσει το ποντίκι πάνω από το στοιχείο*/
     background-color: #ca9a4c;
 }
-
+/*Στοιχείο με id nav_li*/
 #nav_li {
     padding: 20px;/*Δημιουργία κενού εσωτερικά στο μενού γύρω από τα στοιχεία*/
     padding-top: 50px;/*Δημιουργία κενού πάνω εσωτερικά στο μενού*/
@@ -129,7 +123,7 @@ main {
     align-items: center;/*Κεντράρισμα των εσωτερικών στοιχείων κάθετα*/
     padding-bottom: 50px;/*Δημιουργία κενού κάτω εσωτερικά στο μενού*/
 }
-
+/*footer tag*/
 footer {
     display: flex;/*τοποθέτηση flex*/
     flex-direction: row;/*Τα στοιχεία θα τοποθετηθούν οριζόντια*/
@@ -138,11 +132,12 @@ footer {
     background-color: #81b29a;
     border-radius: 5px;/*δημιουργία καμπύλης στις γωνίες*/
 }
+/*Ta tags a μέσα στο στοιχείο με tag footer*/
 footer a{
     margin: 2px;/*δημιουργία κενού εξωτερικά μεταξύ άλλων στοιχείων*/
 }
-
-.clarification {/*κλάση για διευκρινήσεις*/
+/*Όλα τα στοιχεία με κλάση clarification*/
+.clarification {
     padding: 15px;/*δημιουργία εσωτερικού κενού*/
     background-color: #f2cc8f;
     color: #3d405b;
@@ -150,8 +145,8 @@ footer a{
     border-radius: 5px;/*στρογγυλές άκρες*/
     box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
 }
-
-.announcement {/*κλάση για διευκρινήσεις*/
+/*Όλα τα στοιχεία με κλάση announcement*/
+.announcement {
     padding: 15px;/*δημιουργία εσωτερικού κενού*/
     background-color: #81b29a;
     width: fit-content;/*το πλάτος να είναι όσο και το περιεχόμενο*/
@@ -159,8 +154,8 @@ footer a{
     align-self: center;
     box-shadow: 10px 10px 5px grey;/*δημιουργία σκιάς, 10 πίξελ κάτω 10 δεξιά, 5 διαφάνεια χρώματος γκρι*/
 }
-
-.warning {/*κλάση για σφάλματα*/
+/*Όλα τα στοιχεία με κλάση warning*/
+.warning {
     padding: 15px;/*δημιουργία εσωτερικού κενού*/
     background-color: #f94144;
     color: #f4f1de;
@@ -170,8 +165,8 @@ footer a{
     align-self: center;
     position: relative;
 }
-
-.success {/*κλάση για σφάλματα*/
+/*Όλα τα στοιχεία με κλάση warning*/
+.success {
     padding: 15px;/*δημιουργία εσωτερικού κενού*/
     background-color: #2a9d8f;
     color: #f4f1de;
@@ -181,17 +176,17 @@ footer a{
     align-self: center;
     position: relative;
 }
-
-section.col *{ /*Σε όλα τα section που έχουν κλάση col βγάζουμε τα padding και margin*/
+/*Σε όλα τα section που έχουν κλάση col βγάζουμε τα padding και margin*/
+section.col *{ 
     margin: unset;
     padding: unset;    
 }
-
-.block {/*Θέτουμε στην κλάση block padding και margin*/
+/*Θέτουμε στην κλάση block padding και margin*/
+.block {
     margin-top: 10px;
     margin-bottom: 20px;
 }
-
+/*Όλα τα tag form*/
 form {
     border-style: solid;
     border-width: 3px;
@@ -202,7 +197,7 @@ form {
     display: flex;
     flex-direction: column;
 }
-
+/*Όλα τα τα στοιχεία με κλάση field*/
 .field {
     margin-left: 10px;
     margin-right: 10px;
@@ -213,7 +208,7 @@ form {
     flex-wrap: wrap;
     justify-content: flex-end;
 }
-
+/*Όλα τα στοιχεία με κλάση error*/
 .error {
     display: flex;
     justify-self: flex-end;
@@ -223,49 +218,49 @@ form {
     margin-right: 10px;
     color: red;
 }
-
+/*Στοιχεία με id role*/
 #role {
     min-width: 177px;
 }
-
+/*Όλα τα input tags με type submit*/
 input[type=submit],
 input.submit {
     margin-top: 5px;
 }
-
+/*Όλα τα tag label*/
 label {
     display: flex;
     padding: 0px 1em 0px 8px;
     justify-content: center;
-  }
-  
-  input[type=radio],
-  input.radio {
+}
+/*Όλα τα input tags με type radio*/
+input[type=radio],
+input.radio {
     margin: 2px 0 0 2px;
-  }
-
+}
+/*Όλα τα στοιχεία με κλάση hidden_forms*/
 .hidden_forms {    
     align-self: center;
     margin: 5px;
     border-style: none;
     padding: 0px;
 }
-
+/*Όλα τα input tags με κλάση button που είναι μέσα σε στοιχείο με κλάση hidden_forms*/
 .hidden_forms > input.button{
     padding: 10px;
     background-color: #f2cc8f;
     border-color: #3d405b;
     border-radius: 5px;
 }
-
+/*Όλα τα input tags με κλάση button που περνάει το ποντίκι από πάνω και είναι μέσα σε στοιχείο με κλάση hidden_forms*/
 .hidden_forms > input.button:hover{
     background-color: #ca9a4c;
 }
-
+/*Όλα τα input tags με κλάση button που είναι πατημένο το κλικ του ποντικιού πάνω τους και είναι μέσα σε στοιχείο με κλάση hidden_forms*/
 .hidden_forms > input.button:active{
     background-color: #f4f1de;
 }
-
+/*Στοιχείο με id close*/
 #close {
     position: absolute;
     top: 0;
@@ -277,7 +272,7 @@ label {
     color: #000000;
     margin: 1px;
 }
-
+/*Στοιχείο με id close όταν περνάει το ποντίκι από πάνω του*/
 #close:hover {
     float:right;
     display:inline-block;
@@ -285,17 +280,13 @@ label {
     background:#ccc;
     color:rgb(107, 107, 107);
 }
-
+/*Στοιχεία με κλάση col_item*/
 .col_item {
     margin: 10px;
     justify-self: center;
     align-self: center;
 }
-
-td {
-
-}
-
+/*Στοιχεία με κλάση slot*/
 .slot {    
     display: block;
     width: auto;
@@ -305,27 +296,27 @@ td {
     color: black;
     text-align: center;
 }
-
+/*Στοιχεία με κλάση slot όταν περνάει το ποντίκι από πάνω*/
 .link_slot:hover {
     background-color: #3d405b;
     color: #ccc;
 }
-
+/*Στοιχεία με κλάση slot που είναι πατημένο το κλικ του ποντικιού πάνω τους*/
 .link_slot:active {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
 }
-
+/*Στοιχεία με κλάση timeslot*/
 .timeslot {
     padding: 0;
 }
-
+/*Στοιχείο με id sideHiddenForms*/
 #sideHiddenForms {
     padding: 0px;
     margin: 0px;
     align-self: center;
 }
-
+/*Στοιχείο με κλάση modal*/
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -338,10 +329,9 @@ td {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content */
-  .modal-content {
+}
+ /*Στοιχείο με κλάση modal-content*/
+.modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -350,31 +340,30 @@ td {
     position: fixed;
     bottom: 50%;
     left: 50%;;
-  }
-  
-  /* The Close Button */
-  .closeModal {
+}
+/*Στοιχείο με κλάση closeModal*/
+.closeModal {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  
-  .closeModal:hover,
-  .closeModal:focus {
+}
+/*Στοιχείο με κλάση closeModal όταν περνάει το ποντίκι από πάνω του*/
+.closeModal:hover,
+.closeModal:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
-
-  #hidden_modal_form {
-    display: none;
-  }
-
-  .row_completed {      
-      background: #81b29a!important;
-  }
-
-  .row_incomplete {      
+}
+/*Στοιχείο με id hidden_modal_form*/
+#hidden_modal_form {
+    display: none;/*Κατά την αρχικοποίηση της σελίδας το modal είναι κρυμμένο*/
+}
+/*Στοιχείο με κλάση row_completed*/
+.row_completed {      
+    background: #81b29a!important;
+}
+/*Στοιχείο με κλάση row_incomplete*/
+.row_incomplete {      
     background: #e07a5f!important;
 }

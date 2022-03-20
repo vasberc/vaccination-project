@@ -2,7 +2,7 @@
 	include("./dbManager/dbManager.php");
     //Αντικείμενο για την αναζήτηση και εγγραφή στην Βάση δεδομένων
     $dbManager = new DbManager();
-    //Μεταβλητή που θα λέει στην σελίσα αν υπάρχει σφάλμα για να εμφανίζει το ανάλογο μήνυμα
+    //Flag για την εμφάνιση μηνύματος error
     $hasError = isset($_GET['error']) ? $_GET['error'] == 1 ? true : false : false;
     
     //Αν υποβλήθηκε η φόρμα της εγγραφής
@@ -25,7 +25,7 @@
             } else {
                 $email = null;
             }
-            //Δημιοουργία αντικείμενου User χωρίς id 
+            //Δημιουργία αντικείμενου User χωρίς id 
             $user = new User(
                 $_POST['name'],
                 $_POST['surname'],
@@ -39,7 +39,7 @@
                 $isDoctor
             );
         } catch (Exception $ex) {
-        //Σε περίπτωση σφάλματος φωρτώνει πάλι η σελίδα με τις μεταβλητές λάθους σαν query στο λινκ
+        //Σε περίπτωση σφάλματος φορτώνει πάλι η σελίδα με τις μεταβλητές λάθους σαν query στο λινκ
         $message = $ex->getMessage();                
         header("Location: ./signin-signup.php?message=$message&error=1");
         exit();
@@ -51,12 +51,16 @@
                 $dbManager->saveUserToDb($user);              
                 //Αν επιτύχει η εγγραφή παίρνουμε τον χρήστη από την βάση για να έχουμε το id του
                 $user = $dbManager->getUserFromDbByAmka($user->amka);
+                //Αν ο χρήστης είναι γιατρός δημιουργούμε ένα αντικείμενο VaccinationCenterDoctor που είναι υποκλάση του user
                 if($user->isDoctor) {
                     $user = new VaccinationCenterDoctor(
                         $user,
                         null,
                         null
                     );
+                    startSession($user);
+                    header("Location: ./doctor-page.php");
+                    exit();
                 }
                 //Ξεκινάμε το session για τον χρήστη αυτό και μεταφερόμαστε αυτόματα στην σελίδα του χρήστη
                 startSession($user);
@@ -75,7 +79,12 @@
         //Αν υπάρχει τέτοιος χρήστης τότε ξεκινάμε το session και μεταφερόμαστε στην σελίδα χρήστη
         if(isset($user)) {
             if($user->isDoctor) {
+                //Αν ο χρήστης είναι γιατρός, κάνουμε get το αντικείμενο του γιατρού από το db
                 $doctor = $dbManager->getDoctorFromDbByUser($user);
+                /**
+                 * Αν έρθει null αρχικοποιούμε ένα γιατρό χωρίς vaccinationCenterId και χωρίς vaccinationCenterDoctorId
+                 * έπειτα θέτουμε τον τρέχον user να είναι ο γιατρός. 
+                 * */
                 if(!isset($doctor)) {
                     $user = new VaccinationCenterDoctor(
                         $user,
@@ -84,6 +93,9 @@
                     );
                 } else {
                     $user = $doctor;
+                    startSession($user);
+                    header("Location: ./doctor-page.php");
+                    exit();
                 }
             }
             startSession($user);

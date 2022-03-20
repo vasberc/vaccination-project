@@ -13,6 +13,7 @@
     function deleteSession() {
         unset($_SESSION['user']);
     }
+    //Function για να αφαιρέσουμε από τον χρήστη του session το ραντεβού
     function deleteAppointmentFromSession() {
         $_SESSION['user']->appointment = null;
     }

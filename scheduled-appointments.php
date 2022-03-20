@@ -63,6 +63,7 @@
             <?php  if($hasError or $hasSucceed) { ?>
                     <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
             <?php  } ?>
+            <h3 class="col_item">Προγραμματισμένα Ραντεβού στο <?php echo $_SESSION['user']->vaccinationCenter->name; ?></h3>
             <table class="col_table" id="appointments_table">
                     <tr>
                         <th>Κωδικός ραντεβού</th>
@@ -86,7 +87,9 @@
                     </tr>
                 <?php } ?>                    
                 </table>
-                
+                <form class="hidden_forms" name="back" action="./doctor-page.php">
+                    <input class="button" type="submit" value="Πίσω">
+                </form>
             </main>
         </div>
         <!--Tag όπου περιέχει τα στοιχεία του footer -->  

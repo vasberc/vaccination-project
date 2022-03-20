@@ -113,7 +113,9 @@
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
-                
+                <form class="hidden_forms" name="back" action="./userpage.php">
+                    <input class="button" type="submit" value="Πίσω">
+                </form>
             </main>
         </div>
         <!--Tag όπου περιέχει τα στοιχεία του footer -->  

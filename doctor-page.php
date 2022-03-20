@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+    <?php if($_SESSION['user']->vaccinationCenter == null) { ?>
         <!-- Modal Που θα εμφανίζεται για την καταχώρηση εμβολιαστικού κέντρου  πηγή: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal -->
         <div id="myModal" class="modal">
             <!-- Περιεχόμενο του Modal -->
@@ -40,6 +41,7 @@
                 <input type="hidden" id="register_vaccination_center_with_id" name="register_vaccination_center_with_id" value="">
             </form>
         </div>
+    <?php } ?>
         <!--Tag όπου περιέχει τα στοιχεία του header -->
         <header>
             <!--εικόνα μέσα σε λίνκ ώστε να είναι clickable -->
@@ -112,22 +114,21 @@
                         <td colspan="3"><?php if($_SESSION['user']->vaccinationCenter == null) echo 'Δεν καταχωρήθηκε'; else echo $_SESSION['user']->vaccinationCenter->name ?></td>
                     </tr>
                 </table>
-                <!-- action="javascript:handleClick()" -->
-                    <section class="side" id="sideHiddenForms">
-                        <form class="hidden_forms" name="vaccination_center" action=<?php if($_SESSION['user']->vaccinationCenter == null) echo "javascript:displayModal()"; else echo '""'; ?> method="post">                            
-                            <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter != null) echo '"registered"'; ?>>
-                            <input class="button" type="submit" value="Καταχωρήστε το εμβολιαστικό κέντρο που εργάζεστε">
-                        </form>
-                        <form class="hidden_forms" name="scheduled_appointments" action="" method="post">                            
-                            <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter == null) echo '"notRegistered"'; else echo '"scheduledAppointments"'; ?>>
-                            <input class="button" type="submit" value="Προγραμματισμένα ραντεβού">
-                        </form>
-                    </section>                   
-
-                    <form class="hidden_forms" name="sing_out" action="" method="post">                            
-                        <input type="hidden" id="action" name="action" value="logout">
-                        <input class="button" type="submit" value="Αποσύνδεση χρήστη">
+                <section class="side" id="sideHiddenForms">
+                    <form class="hidden_forms" name="vaccination_center" action=<?php if($_SESSION['user']->vaccinationCenter == null) echo "javascript:displayModal()"; else echo '""'; ?> method="post">                            
+                        <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter != null) echo '"registered"'; ?>>
+                        <input class="button" type="submit" value="Καταχωρήστε το εμβολιαστικό κέντρο που εργάζεστε">
                     </form>
+                    <form class="hidden_forms" name="scheduled_appointments" action="" method="post">                            
+                        <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter == null) echo '"notRegistered"'; else echo '"scheduledAppointments"'; ?>>
+                        <input class="button" type="submit" value="Προγραμματισμένα ραντεβού">
+                    </form>
+                </section>                   
+
+                <form class="hidden_forms" name="sing_out" action="" method="post">                            
+                    <input type="hidden" id="action" name="action" value="logout">
+                    <input class="button" type="submit" value="Αποσύνδεση χρήστη">
+                </form>
             </main>
         </div>
         <!--Tag όπου περιέχει τα στοιχεία του footer -->  

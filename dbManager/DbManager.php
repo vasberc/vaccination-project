@@ -217,7 +217,7 @@
 
         public function getAppointmentsOfSelectedVaccinationCenter($selectedVaccinationCenterId) {
             $con = $this->connect();
-            $query = "select * from appointments where vaccination_center_id = '".$selectedVaccinationCenterId."' ";
+            $query = "select * from appointments where vaccination_center_id = '".$selectedVaccinationCenterId."' ORDER BY date ASC, time ASC";
             $result = mysqli_query($con, $query);
             mysqli_close($con);
             if($result && mysqli_num_rows($result) > 0) {
