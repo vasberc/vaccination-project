@@ -53,7 +53,11 @@
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
             <button id="signin_signup" 
-                    onclick=<?php   if($isLoggedIn) {
+                    onclick=<?php   /**
+                                     *Εάν έχει γίνει login ανάλογα τον ρόλο, το κουμπί να οδηγεί στην σελίδα του χρήστη
+                                     *αλλιώς οδηγεί στην σελίδα με τις φόρμες εισόδου και εγγραφής
+                                     */
+                                    if($isLoggedIn) {
                                         if(!$_SESSION['user']->isDoctor) 
                                             echo "location.href='userpage.php'"; 
                                         else 
@@ -76,10 +80,12 @@
             </nav>
             <!--Tag με το βασικό περιεχόμενο τησ σελίδας --> 
             <main class="col">
-            <?php  if($hasError or $hasSucceed) { ?>
+            <?php //Ελεγχος για την εμφάνιση error message ή success message 
+                if($hasError or $hasSucceed) { ?>
                     <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
             <?php  } ?>
             <h3 class="col_item">Προσωπικά στοιχεία Γιατρού</h3>
+                <!-- Τα πεδία του πίνακα συμπληρώνονται από τα στοιχεία του Γιατρού που έχουν περαστεί στο session -->
                 <table class="col_table">
                     <tr>
                         <th>Όνομα:</th>
@@ -115,6 +121,7 @@
                     </tr>
                 </table>
                 <section class="side" id="sideHiddenForms">
+                    <!-- Κρυφές φόρμες όπου στον χρήστη φαίνονται μόνο τα κουμπιά, για περάσουμε με post τις τιμές στον controller -->
                     <form class="hidden_forms" name="vaccination_center" action=<?php if($_SESSION['user']->vaccinationCenter == null) echo "javascript:displayModal()"; else echo '""'; ?> method="post">                            
                         <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->vaccinationCenter != null) echo '"registered"'; ?>>
                         <input class="button" type="submit" value="Καταχωρήστε το εμβολιαστικό κέντρο που εργάζεστε">

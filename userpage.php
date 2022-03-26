@@ -32,7 +32,11 @@
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
             <button id="signin_signup" 
-                    onclick=<?php   if($isLoggedIn) {
+                    onclick=<?php   /**
+                                     *Εάν έχει γίνει login ανάλογα τον ρόλο, το κουμπί να οδηγεί στην σελίδα του χρήστη
+                                     *αλλιώς οδηγεί στην σελίδα με τις φόρμες εισόδου και εγγραφής
+                                     */
+                                    if($isLoggedIn) {
                                         if(!$_SESSION['user']->isDoctor) 
                                             echo "location.href='userpage.php'"; 
                                         else 
@@ -59,6 +63,7 @@
                     <p class=<?php if($hasError) echo '"warning"'; else echo '"success"'; ?>><a class='child' id='close' href="?">x</a><?php if($hasError) echo $_ERROR_MESSAGES[$_GET['message']]; else echo $_SUCCESS_MESSAGES[$_GET['message']]?></p>
             <?php  } ?>
             <h3 class="col_item">Προσωπικά στοιχεία</h3>
+                <!-- Ο πίνακας συμπληρώνεται με τα στοιχεία του χρήστη που είναι καταχωρημένα στο session -->
                 <table class="col_table">
                     <tr>
                         <th>Όνομα:</th>
@@ -89,6 +94,7 @@
                         <td colspan="3"><?php echo $_SESSION['user']->email; ?></td>
                     </tr>
                 </table>
+                <!-- Εάν ο χρήστης έχει καταχωρημένο ραντεβού, εμφανίζεται στην οθόνη αν δεν είναι ολοκληρωμένο -->
                 <?php if($_SESSION['user']->appointment != null) { ?>
                     <h3 class="col_item">Στοιχεία Ραντεβού</h3>
                     <?php if(!$_SESSION['user']->appointment->completed) { ?>
@@ -109,11 +115,13 @@
                         <th>Ώρα:</th>
                         <td><?php echo date("H:i", strtotime($_SESSION['user']->appointment->time)); ?></td>
                     </tr>                    
-                </table>                
+                </table>     
+                <!-- Αν το ραντεβού είναι ολοκληρωμένο εμφανίζεται ανάλογο μήνυμα -->
                     <?php } else { ?>
                 <p class="announcement">Συγχαρητήρια έχετε ολοκληρώσει επιτυχώς τον εμβολιασμό σας!</p>
                     <?php } ?>
                 <?php } ?>  
+                <!-- Το κουμπί που είναι για κλείσιμο ραντεβού ή την διαγραφή του εμφανίζεται μόνο αν δεν υπάρχει ραντεβού ή ο εμβολιασμός δεν είναι ολοκληρωμένος  -->
                 <?php if($_SESSION['user']->appointment == null or !$_SESSION['user']->appointment->completed) { ?>
                 <form class="hidden_forms" name="appointment" action="" method="post">                            
                     <input type="hidden" id="action" name="action" value=<?php if($_SESSION['user']->appointment != null) echo '"delete"'; else echo '"create"'; ?>>

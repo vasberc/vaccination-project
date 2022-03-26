@@ -6,6 +6,7 @@
 	    private $dbuser;
 	    private $dbpass;
 	    private $dbname;
+
         //Στον constructor θέτουμε τα στοιχεία για την σύνδεση με την βάση
         function __construct() {
             $this->dbhost = 'localhost';
@@ -44,7 +45,7 @@
                         '$isDoctor'                          
                     )";
             if(!mysqli_query($con, $query)) {
-                //Σε περίπτωση που δεν εκτέλέστηκε το query εμφάνιση ανάλογου σφάλματος
+                //Σε περίπτωση που δεν εκτελέστηκε το query εμφάνιση ανάλογου σφάλματος
                 if((stripos(mysqli_error($con), "Duplicate entry") !== false)) {
                     //Duplicate entry εμφανίζεται σύμφωνα με τα constraints του πίνακα
                     $message = 'userSignUpErrorDuplicateEntry';                    
@@ -58,7 +59,7 @@
         }
         /**
          * Function που βρίσκει από την βάση τον χρήστη με το δοθέν ΑΜΚΑ,
-         * επιστρέφει αντικείμενο User,
+         * επιστρέφει αντικείμενο User με το ραντεβού του αν έχει κλείσει ραντεβού,
          * σε περίπτωση σφάλματος null
          */
         public function getUserFromDbByAmka($amka) {
@@ -85,7 +86,7 @@
                         $isDoctor,
                         (int)$userData['user_id']
                     );
-
+                    //Ανάκτηση του ραντεβού του χρήστη αν υπάρχει
                     $user->appointment = $this->getUserAppointmentFromDb($user);
 
                     mysqli_free_result($result);
@@ -101,8 +102,10 @@
          * σε περίπτωση σφάλματος null
          */
         public function getUserFromDbForLogin($amka, $afm) {
+            //Ανάκτηση του User από την υλοποιημένη μέθοδο
             $user = $this->getUserFromDbByAmka($amka);
             if(isset($user)) {
+                //Έλεγχος αν ταιριάζει το afm που δόθηκε
                 if($user->afm == $afm) {
                     return $user;
                 }

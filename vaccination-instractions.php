@@ -23,7 +23,11 @@
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
             <button id="signin_signup" 
-                    onclick=<?php   if($isLoggedIn) {
+                    onclick=<?php   /**
+                                     *Εάν έχει γίνει login ανάλογα τον ρόλο, το κουμπί να οδηγεί στην σελίδα του χρήστη
+                                     *αλλιώς οδηγεί στην σελίδα με τις φόρμες εισόδου και εγγραφής
+                                     */
+                                    if($isLoggedIn) {
                                         if(!$_SESSION['user']->isDoctor) 
                                             echo "location.href='userpage.php'"; 
                                         else 

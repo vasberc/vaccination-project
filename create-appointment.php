@@ -37,7 +37,11 @@
             </div>            
             <!--Κουμπί όπου στην Onclick χρησιμοποιεί την location.href η οποία θέτει το url της τρέχουσας σελίδας-->
             <button id="signin_signup" 
-                    onclick=<?php   if($isLoggedIn) {
+                    onclick=<?php    /**
+                                     *Εάν έχει γίνει login ανάλογα τον ρόλο, το κουμπί να οδηγεί στην σελίδα του χρήστη
+                                     *αλλιώς οδηγεί στην σελίδα με τις φόρμες εισόδου και εγγραφής
+                                     */
+                                    if($isLoggedIn) {
                                         if(!$_SESSION['user']->isDoctor) 
                                             echo "location.href='userpage.php'"; 
                                         else 
@@ -60,10 +64,16 @@
             </nav>
             <!--Tag με το βασικό περιεχόμενο τησ σελίδας --> 
             <main class="col">
-            <?php  if($hasError) { ?>
+<?php           //Ελεγχος για την εμφάνιση error message
+                if($hasError) { ?>
                     <p class="warning"><a class='child' id='close' href="?">x</a><?php echo $_ERROR_MESSAGES[$_GET['message']]; ?></p>
-            <?php  } ?>
-            <?php if($vaccinationCenters) { ?>
+<?php           } ?>
+<?php           /**
+                 * Εδώ γίνεται έλεγχος αν υπάρχουν εμβολιαστικά κέντρα για να εμφανιστεί το drop down
+                 * τα στοιχεία html option εισάγονται με 1 for έτσι ώστε άν στο μέλλον προστεθεί κάποιο
+                 * εμβολιαστικό κέντρο να μπορεί να εμφανιστεί χωρίς αλλαγές στον κώδικα.
+                 */
+                if($vaccinationCenters) { ?>
                 <h3 class="col_item"><?php if($selectedVaccinationCenter) echo $selectedVaccinationCenter->name; else echo "Διαθέσιμα εμβολιαστικά κέντρα"; ?></h3>
                 <select class="col_item" name="forma" onchange="location = this.value;">
                     <option value="?">Επιλέξτε εμβολιαστικό κέντρο</option>
@@ -71,7 +81,12 @@
                     <option value="?vaccination_center_id=<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
                 <?php } ?>
                 </select>
-                <?php if($selectedVaccinationCenter != false) { ?>
+<?php               /**
+                     * Εδώ γίνεται έλεγχος αν έχει γίνει επιλογή ενώς εμβολιαστικού κέντρου να εμφανιστούν τα στοιχεία του
+                     * και τα διαθέσιμα ραντεβού, αν δεν υπάρχει διαθέσιμο ραντεβού δεν θα εμφανιστεί καθόλου ο 2ος πίνακας
+                     * που περιέχει τις ημερομηνίες και τις ώρες.
+                     */
+                    if($selectedVaccinationCenter != false) { ?>
                 <table class="col_table">
                     <tr>
                         <th>Διεύθυνση:</th>
