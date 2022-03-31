@@ -1,7 +1,5 @@
 <?php 
     include("./controllers/sessionController.php");
-    include("./controllers/userPageController.php");
-    include("./utils/strings.php");
     if(!$isLoggedIn) {
         header("Location: ./signin-signup.php");
         exit();
@@ -9,6 +7,9 @@
         header("Location: ./doctor-page.php");
         exit();
     }
+    //Tα αρχεία φορτώνονται μόνο αν δεν γίνει redirect
+    include("./controllers/userPageController.php");
+    include("./utils/strings.php");
 ?>
 
 <!DOCTYPE html>

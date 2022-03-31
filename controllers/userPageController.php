@@ -8,9 +8,7 @@
     $hasSucceed = isset($_GET['error']) ? $_GET['error'] == 0 ? true : false : false;
 
     //Ανάκτηση του ραντεβού του χρήστη, σε περίπτωση που είναι ήδη μέσα και ο Γιατρός του αλλάξει status να έχει ενημερωθεί
-    // if(!$_SESSION['user']->isDoctor) {
-        $_SESSION['user']->appointment = $dbManager->getUserAppointmentFromDb($_SESSION['user']);
-    // }
+    $_SESSION['user']->appointment = $dbManager->getUserAppointmentFromDb($_SESSION['user']);
     
     //Εδώ θα μπει αν πατηθεί κάποιο κουμπί από τις hidden forms
     if(isset($_POST['action'])) {
@@ -38,7 +36,6 @@
          */
         } else if ($_POST['action'] == 'delete') {
             if($dbManager->deleteAppointment($_SESSION['user']->appointment->id)) {
-                deleteAppointmentFromSession();
                 $message = 'appointmentDeletedSuccessfully';
                 header("Location: ./userpage.php?message=$message&error=0");
                 exit();

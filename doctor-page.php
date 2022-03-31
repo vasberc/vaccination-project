@@ -1,7 +1,5 @@
 <?php 
-    include("./controllers/sessionController.php");
-    include("./controllers/doctorPageController.php");
-    include("./utils/strings.php");
+    include("./controllers/sessionController.php");    
     if(!$isLoggedIn) {
         header("Location: ./signin-signup.php");
         exit();
@@ -9,6 +7,9 @@
         header("Location: ./userpage.php");
         exit();
     }
+    
+    include("./controllers/doctorPageController.php");
+    include("./utils/strings.php");
 ?>
 
 <!DOCTYPE html>

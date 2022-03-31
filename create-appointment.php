@@ -1,9 +1,6 @@
 <?php 
     include("./controllers/sessionController.php");
-    include("./controllers/createAppointmentController.php");
-    include("./utils/strings.php");
-
-    //Σε περίπτωση που κάποιος χρήστης πατήσει το λινκ της σελίδας ενώ για κάποια από τις παρακάτω περιπτώσεις θα γίνεται redirect
+    //Σε περίπτωση που κάποιος χρήστης πατήσει το λινκ της σελίδας για κάποια από τις παρακάτω περιπτώσεις θα γίνεται redirect
     if(!$isLoggedIn) {
         header("Location: ./signin-signup.php");
         exit();
@@ -14,6 +11,9 @@
         header("Location: ./userpage.php");
         exit();
     }
+
+    include("./controllers/createAppointmentController.php");
+    include("./utils/strings.php");
 ?>
 
 <!DOCTYPE html>
@@ -103,6 +103,7 @@
                 </table>
                 <h3 class="col_item"><?php if($reservedAppointments != false && count($reservedAppointments) == 6) echo "Λυπόμαστε δεν υπάρχουν διαθέσιμα ραντεβού την τρέχουσα περίοδο"; else echo "Επιλέξτε ένα από τα διαθέσιμα ραντεβού"; ?></h3>
                     <?php if($reservedAppointments == false or ($reservedAppointments != false && count($reservedAppointments) < 6)) { ?>
+                <!-- Πίνακας με τα διαθέσιμα ραντεβού, αν επιλεχτεί κάποιο από αυτά, φορτώνεται πάλι η σελίδα με query params το id του εμβολιαστικού κέντρου και τον αύξοντα αριθμό του timeslot -->
                 <table class="col_table">
                     <tr>
                         <th>Ώρα\Ημ/νία</th>

@@ -13,10 +13,6 @@
     function deleteSession() {
         unset($_SESSION['user']);
     }
-    //Function για να αφαιρέσουμε από τον χρήστη του session το ραντεβού
-    function deleteAppointmentFromSession() {
-        $_SESSION['user']->appointment = null;
-    }
     //Μεταβλητή boolean που είναι true μόνο αν ο χρήστης έχει κάνει login
     $isLoggedIn = isset($_SESSION['user']);
 ?>

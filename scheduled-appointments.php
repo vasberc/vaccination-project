@@ -1,7 +1,5 @@
 <?php 
-    include("./controllers/sessionController.php");
-    include("./controllers/scheduledAppointmentsController.php");
-    include("./utils/strings.php");
+    include("./controllers/sessionController.php");    
 
     //Σε περίπτωση που κάποιος χρήστης πατήσει το λινκ της σελίδας ενώ για κάποια από τις παρακάτω περιπτώσεις θα γίνεται redirect
     if(!$isLoggedIn) {
@@ -14,6 +12,9 @@
         header("Location: ./doctor-page.php");
         exit();
     }
+    
+    include("./controllers/scheduledAppointmentsController.php");
+    include("./utils/strings.php");
 ?>
 
 <!DOCTYPE html>

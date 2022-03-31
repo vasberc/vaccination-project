@@ -276,7 +276,7 @@
         /**
          * Function που εισάγει ένα ραντεβού στην βάση
          * επιστρέφει true,
-         * σε περίπτωση σφάλματος αν είναι duplicate entry κάνει trow exception
+         * σε περίπτωση σφάλματος αν είναι duplicate entry κάνει throw exception
          * με το ανάλογο μήνυμα αλλιώς επιστρέφει false
          */
         public function saveNewAppointment($vaccinationCenterId, $timeslot, $user) {
