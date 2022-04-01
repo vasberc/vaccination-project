@@ -99,10 +99,10 @@
                                 <option value=<?php if($item->completed) echo "\"?appointment_id=$item->id&completed=".!$item->completed."\""; else echo "\"?appointment_id=$item->id&completed=".!$item->completed."\""; ?>><?php if($item->completed) echo "Μη ολοκληρωμένο"; else echo "Ολοκληρώθηκε" ?></option>
                             </select>
                         </td>
-                    </tr>                                       
+                    </tr>
+<?php           } ?>
                 </table>
-<?php           }
-            } else { ?>
+<?php            } else { ?>
                 <P class="warning">Δεν υπάρχουν προγραμματισμένα ραντεβού, για το διάστημα 1/4/2022-2/4/2022</p>
 <?php       } ?> 
                 <form class="hidden_forms" name="back" action="./doctor-page.php">
