@@ -1,7 +1,5 @@
 <?php 
-    include("./controllers/sessionController.php");
-    include("./controllers/signinSignupController.php");
-    include("./utils/strings.php");
+    include("./controllers/sessionController.php");   
     if($isLoggedIn) {
         if($_SESSION['user']->isDoctor) {            
         header("Location: ./doctor-page.php");
@@ -10,6 +8,8 @@
         header("Location: ./userpage.php");
         exit();
     }
+    include("./controllers/signinSignupController.php");
+    include("./utils/strings.php");
 ?>
 
 <!DOCTYPE html>
